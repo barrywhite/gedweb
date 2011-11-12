@@ -10,7 +10,6 @@ public class OlaMundo implements Serializable {
 	private static final long serialVersionUID = 1L;
  
 	private String name;
-	private String teste;
  
 	public String getName() {
 		return name;
@@ -18,12 +17,7 @@ public class OlaMundo implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getTeste() {
-		return teste;
-	}
-	public void setTeste(String teste) {
-		this.teste = teste;
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
