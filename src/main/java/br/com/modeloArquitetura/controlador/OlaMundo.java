@@ -7,6 +7,8 @@ import java.io.Serializable;
 @SessionScoped
 public class OlaMundo implements Serializable {
  
+	
+	
 	private static final long serialVersionUID = 1L;
  
 	private String name;
