@@ -1,0 +1,24 @@
+
+antes de usar essa versao Beta, "modeloArquiteturaBeta1", siga o passo abaixo.
+
+apos configurar o maven execute a seguinte linha no terminal:
+
+mvn clean install eclipse:eclipse
+
+
+
+Tecnologias usadas:
+- maven 2.0.10
+- jpa 2.0
+- hibernate
+- jsf2 com facelets
+- postgresql 9
+- servlet 3.0
+- testng
+- primefaces
+
+
+Joel Marques
+Graduando em Ciencia da Computacao - UNAMA 2/2008
+E-mail: joelmarques2008@hotmail.com
+Cel.: (91) 9187-6710

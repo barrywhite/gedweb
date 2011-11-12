@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:body>
+
+	<h:panelGrid cellpadding="5">
+		<h:panelGroup>
+			<h:outputLabel for="nome" value="Nome" /><br/>
+			<h:inputText id="nome" required="true"  
+						 label="Nome" maxlength="100" size="30" style="width:750px;" value="#controladorAluno.nome"/>
+		</h:panelGroup>	
+	</h:panelGrid>
+	
+	<h:panelGrid columns="2" cellpadding="5">
+	
+		<h:panelGroup>
+			<h:outputLabel for="endereco" value="Endereço" /><br/>
+			<h:inputText id="endereco"
+						 label="Endereço" maxlength="100" style="width:650px;" />
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<h:outputLabel for="numeroCasa" value="N°" /><br/>
+			<h:inputText id="numeroCasa"
+						 label="N°" size="2" style="width:80px;" />
+		</h:panelGroup>
+				
+	</h:panelGrid>
+	
+	<h:panelGrid columns="5" cellpadding="5">			
+	<h:panelGroup>
+		<h:outputLabel for="complemento" value="Complemento" /><br/>
+		<h:inputText id="complemento"
+					 label="Complemento" maxlength="100" style="width:120px;" />
+	</h:panelGroup>
+	
+	<h:panelGroup>
+		<h:outputLabel for="bairro" value="Bairro" /><br/>
+		<h:inputText id="bairro"
+					 label="Bairro" maxlength="100" style="width:200px;" />
+	</h:panelGroup>
+	
+	<h:panelGroup>
+		<h:outputLabel for="cep" value="CEP" /><br/>
+		<h:inputText id="cep" 
+					 label="CEP" maxlength="20" size="2" style="width:100px;" />
+	</h:panelGroup>
+	
+		<h:panelGroup>
+		<h:outputLabel for="cidade" value="Cidade" /><br/>
+		<h:inputText id="cidade" 
+					 label="Cidade" maxlength="100" style="width:200px;" />
+	</h:panelGroup>
+	
+	<h:panelGroup>
+        <h:outputLabel value="U.F. "/><br />
+ 		<h:inputText id="uf" 
+					 label="uf" maxlength="30" style="width:50px;" />
+ 	</h:panelGroup>
+		
+	</h:panelGrid>
+	
+	
+	<h:panelGrid columns="5" cellpadding="5">
+		
+		<h:panelGroup>
+			<h:outputLabel for="cpf" value="CPF" /><br/>
+			<p:inputMask id="cpf" mask="999.999.999-99" />
+		</h:panelGroup>
+		
+		<h:panelGroup>
+         <h:outputLabel for="rg" value="RG:" /><br />
+         <h:inputText id="rg" label="RG:" style="width:130px;" />
+         </h:panelGroup>
+         
+         <h:panelGroup>
+         <h:outputLabel for="dataNascimento" value="Data de Nascimento:" /><br />
+         <p:inputMask id="dataNascimento" label="Data de Nascimento:" mask="99/99/9999"/>
+         </h:panelGroup>
+         
+         <h:panelGroup>
+		<h:outputLabel value="Sexo:" />
+			<h:selectOneRadio>
+				<f:selectItem itemLabel="Masculino" itemValue="MASCULINO"/>
+ 				<f:selectItem itemLabel="Feminino" itemValue="FEMININO"/>
+ 			</h:selectOneRadio>
+        </h:panelGroup>
+        
+         <h:panelGroup>
+        <h:outputLabel value="Estado Civil: "/><br />
+ 		<h:selectOneMenu>
+ 			<f:selectItem itemLabel="Solteiro" itemValue="SOLTEIRO"/>
+ 			<f:selectItem itemLabel="Casado" itemValue="CASADO"/>
+ 			<f:selectItem itemLabel="Divorciado" itemValue="DIVORCIADO"/>
+ 			<f:selectItem itemLabel="Viúvo" itemValue="VIUVO"/>
+ 			<f:selectItem itemLabel="Outro" itemValue="OUTRO"/>
+ 		</h:selectOneMenu> 
+ 		</h:panelGroup> 
+         
+     </h:panelGrid>
+     
+     <h:panelGrid columns="3" cellpadding="5">
+     
+     	<h:panelGroup>
+			<h:outputLabel for="email" value="E-mail" /><br/>
+			<h:inputText id="email"
+						 label="E-mail" maxlength="100" style="FONT-SIZE: large; width:400px;" />						 
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<h:outputLabel for="telefone" value="Telefone" /><br/>
+			<p:inputMask id="telefone" label="Telefone" mask="(99) 9999-9999"/>
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<h:outputLabel for="celular" value="Celular" /><br/>
+			<p:inputMask id="celular" label="Celular" mask="(99) 9999-9999"/>
+		</h:panelGroup>
+	
+	</h:panelGrid>
+
+		
+</h:body>
+
+
+</html>

@@ -1,0 +1,81 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: black;
+	
+}
+.topo{
+	background-color: #1E90FF;
+}
+
+p.titulo{
+	font-family: Arial, Verdana, sans-serif;
+	font-size:16px;
+	color: #1E90FF;
+}
+
+.logo{
+ vertical-align: middle;
+ }
+
+.botao {
+ background-color: #064D83;
+ margin: 0 0 0 20px;
+ color: white;
+ text-decoration: none;
+ font-size: 10px;
+ line-height: 20px;
+ padding: 5px;
+ vertical-align: middle;
+ }
+
+ .botao:hover{
+ background-color: #cccccc;
+ color: #666666;
+ }
+
+ .formulario fieldset{
+ float: left;
+ margin: 0 0 20px 0;
+ border: 1px solid #333333;
+ }
+
+ .formulario fieldset legend{
+ color: #064D83;
+ font-weight: bold;
+ }
+
+ .botao-formulario{
+ background-color: #064D83;
+ color: #ffffff;
+ padding: 5px;
+ vertical-align: middle;
+ border: none;
+ }
+ .mensagem-erro{
+ color: #ff0000;
+ }
+
+ .titulo {
+ color: #064D83;
+ clear: both;
+ }
+
+ .tabela{
+ border: 1px solid #064D83;
+ border-collapse: collapse;
+ }
+
+ .tabela tr th{
+ background-color: #064D83;
+ color: #ffffff;
+ }
+
+ .tabela tr th,
+ .tabela tr td{
+ border: 1px solid #064D83;
+ padding: 2px 5px;
+ }

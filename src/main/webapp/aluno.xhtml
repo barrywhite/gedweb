@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    
+<ui:composition template="/template.xhtml">
+
+<ui:define name="conteudo">      
+    
+   <p class="titulo" style="FONT-FAMILY: 'Courier 10 Pitch'; font-size:16px;">Cadastro de Aluno</p> 
+ 
+ 	 <h:form id="formConteudo">
+	
+		
+		<ui:include src="/pessoa.xhtml" />
+		
+		<h:panelGrid columns="5" cellpadding="5">
+     
+     	<h:panelGroup>
+			<h:outputLabel for="turma" value="Turma" /><br/>
+			<h:inputText id="turma"
+						 label="turma" maxlength="100" style="width:100px;" />						 
+			</h:panelGroup>
+			
+		<h:panelGroup>
+			<h:outputLabel for="dataMatricula" value="Data Matrícula" /><br/>
+			<p:calendar id="dataMatricula" name="dtMatricula"></p:calendar>
+		</h:panelGroup>
+		
+		<h:panelGroup>		
+		<h:outputLabel for="mensalidade" value="Mensalidade" /><br/>
+			<h:inputText id="mensalidade" label="mensalidade" maxlength="100" style="width:100px;" />						 
+		</h:panelGroup>
+		
+		<h:panelGroup>		
+		<h:outputLabel for="login" value="Login" /><br/>
+			<h:inputText id="login" label="login" maxlength="100" style="width:155px;" />						 
+		</h:panelGroup>
+		
+		<h:panelGroup>		
+		<h:outputLabel for="senha" value="Senha" /><br/>
+			<h:inputText id="senha" label="senha" maxlength="100" style="width:155px;" />						 
+		</h:panelGroup>
+			
+		</h:panelGrid>
+		
+		
+
+ 	<h:panelGrid columns="2" cellpadding="15">
+		<h:panelGroup id="botaoSalvar">	
+		<h:commandButton id="salvar" value="Salvar" styleClass="botao" actionListener="#{controladorAluno.adicionar}"
+						/>
+		</h:panelGroup>
+		
+		<h:panelGroup id="botaoLimpar">	
+		<h:commandButton id="limpar" value="Limpar" styleClass="botao" actionListener="#{controladorDentista.limpar}"
+						/>
+		</h:panelGroup>
+		
+		
+	</h:panelGrid>
+	</h:form>
+ 
+
+
+</ui:define>
+
+</ui:composition>
+
+</html>
