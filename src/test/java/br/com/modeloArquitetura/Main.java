@@ -1,6 +1,5 @@
 package br.com.modeloArquitetura;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -8,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import br.com.modeloArquitetura.crud.CrudGenerico;
-import br.com.modeloArquitetura.modelo.Dentista;
+import br.com.modeloArquitetura.modelo.Aluno;
 
 public class Main {
 
@@ -114,23 +113,23 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 
 		em.getTransaction().begin();
-		// em.persist(dentista);
+		Aluno aluno = new Aluno("turma",new Date(),100f,"login","senha");
+		
+		 em.persist(aluno);
 
 		// teste do Crud Generico. o metodo excluir está ok!!!
-		@SuppressWarnings("rawtypes")
-		CrudGenerico crud = new CrudGenerico(Dentista.class, em);
+		CrudGenerico crud = new CrudGenerico(Aluno.class, em);
 		
-		Dentista dentista = (Dentista)crud.buscarPorChave(11);
+		aluno = (Aluno)crud.buscarPorChave(aluno.getId());
 		
-		crud.excluir(dentista);
+		crud.excluir(aluno);
 		
 		em.getTransaction().commit();
 		
 		em.close();
 		emf.close();
 		
-		System.out.println("Excluido com sucesso!" + " id : "+dentista.getId());
-
+		System.out.println("Excluido com sucesso!" + " id : "+aluno.getId());
 		
 
 

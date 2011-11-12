@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 
 import br.com.modeloArquitetura.enuns.EnumEstadoCivil;
 import br.com.modeloArquitetura.enuns.EnumSexo;
+import br.com.modeloArquitetura.enuns.EnumTipoPessoa;
 
 @Entity
 @Table(name = "TA_PESSOA")
@@ -87,6 +88,10 @@ public class Pessoa {
 	@Column(name = "SENHA", length = 20)
 	private String senha;
 	
+	@Column(name = "TIPO_PESSOA", length = 20)
+	@Enumerated(EnumType.STRING)
+	private EnumTipoPessoa tipoPessoa;
+		
 	@OneToMany
 	@JoinColumn(name = "ID_SOLICITACAO")
 	private List<Solicitacao> solicitacoes;
@@ -282,6 +287,44 @@ public class Pessoa {
 
 	public List<Solicitacao> getSolicitacoes() {
 		return solicitacoes;
+	}
+
+	public EnumTipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(EnumTipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	@Override
+	public String toString() {
+		return "Pessoa [id=" + id + ", nome=" + nome + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

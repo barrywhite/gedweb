@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Sistema GEDWEB</title>
+        <link rel="stylesheet" type="text/css" href="../css/estilo.css"/>
+</h:head>
+<h:body>
+
+	<h1>Solicita&ccedil;oes Documentos</h1>
+	
+	<h:panelGrid columns="2" cellpadding="5">
+		<h:panelGroup>
+			<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante" /><br/>
+			<h:inputText id="endereco"
+						 label="Endereço" maxlength="100" style="width:100px;" value="#{controladorAluno.aluno.endereco}" />
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<h:outputLabel for="numeroCasa" value="N°" /><br/>
+			<h:inputText id="numeroCasa"
+						 label="N°" size="2" style="FONT-SIZE: xx-small; width:80px;" value="#{controladorAluno.aluno.numero}" />
+		</h:panelGroup>
+	</h:panelGrid>
+	
+	<h:dataTable var="aluno" value="#{controladorAluno.listarAlunos}">
+		<h:column>
+		    <f:facet name="header">
+		        <h:outputText value="Nome"/>
+		    </f:facet>
+		    <h:outputText value="#{aluno.nome}"/>
+	    </h:column>
+	    <h:column>
+	        <f:facet name="header">
+	            <h:outputText value="Alterar"/>
+	        </f:facet>
+	        <h:form>
+	            <h:commandButton action="#{controladorAluno.prepararAlterar}" value="Alterar"/>
+	         </h:form>
+	    </h:column>
+	    <h:column>
+	        <f:facet name="header">
+	            <h:outputText value="Excluir"/>
+	        </f:facet>
+	        <h:form>
+	            <h:commandButton action="#{controladorAluno.excluir}" value="Excluir"/>
+	         </h:form>
+	    </h:column>
+	</h:dataTable>
+	<br/>	
+</h:body>
+</html>
