@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter("br.com.modeloArquitetura.modelo.converter.converterData")
+@FacesConverter("br.com.gedweb.modelo.converter.converterData")
 public class ConverterData implements Converter{
 
 	@Override

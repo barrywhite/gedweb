@@ -7,12 +7,12 @@
 	
 	<persistence-unit name="unidadePersistence" transaction-type="RESOURCE_LOCAL">
 		
-		<class>br.com.modeloArquitetura.modelo.Pessoa</class>
-		<class>br.com.modeloArquitetura.modelo.Aluno</class>
-		<class>br.com.modeloArquitetura.modelo.Funcionario</class>
-		<class>br.com.modeloArquitetura.modelo.Departamento</class>
-		<class>br.com.modeloArquitetura.modelo.Solicitacao</class>		
-		<class>br.com.modeloArquitetura.modelo.Tramite</class>
+		<class>br.com.gedweb.modelo.Pessoa</class>
+		<class>br.com.gedweb.modelo.Aluno</class>
+		<class>br.com.gedweb.modelo.Funcionario</class>
+		<class>br.com.gedweb.modelo.Departamento</class>
+		<class>br.com.gedweb.modelo.Solicitacao</class>		
+		<class>br.com.gedweb.modelo.Tramite</class>
 			
 	<properties>
 	
