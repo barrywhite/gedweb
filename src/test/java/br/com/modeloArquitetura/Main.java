@@ -13,6 +13,7 @@ public class Main {
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
+		
 
 		// PRIMEIRO MODO (usando o arquivo persistence.xml)
 //
