@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TA_SOLICITACAO")
@@ -24,9 +27,11 @@ public class Solicitacao {
 	@Column
 	private String justificativa;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="DATA_CRIACAO")
 	private Date dataCriacao;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="DATA_CONCLUSAO")
 	private Date dataConclusao;
 	
@@ -38,7 +43,10 @@ public class Solicitacao {
 
 	@ManyToOne
 	private Pessoa atendente;
-
+	
+	@OneToMany(mappedBy="solicitacao")
+	private List<Tramite> tramites;
+	
 	public Solicitacao() {
 	}
 
@@ -74,8 +82,6 @@ public class Solicitacao {
 		this.dataConclusao = dataConclusao;
 	}
 
-
-
 	public Pessoa getSolicitante() {
 		return solicitante;
 	}
@@ -98,6 +104,14 @@ public class Solicitacao {
 
 	public void setTiposSolicitacao(List<TipoSolicitacao> tiposSolicitacao) {
 		this.tiposSolicitacao = tiposSolicitacao;
+	}
+
+	public List<Tramite> getTramites() {
+		return tramites;
+	}
+
+	public void setTramites(List<Tramite> tramites) {
+		this.tramites = tramites;
 	}
 
 	@Override

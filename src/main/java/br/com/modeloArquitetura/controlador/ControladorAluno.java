@@ -20,6 +20,7 @@ import br.com.modeloArquitetura.modelo.Aluno;
 @ManagedBean(name = "controladorAluno")
 @SessionScoped
 public class ControladorAluno {
+	
 
 	ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 	EntityManager entityManager = (EntityManager) FacesContext.getCurrentInstance().getApplication().getELResolver().

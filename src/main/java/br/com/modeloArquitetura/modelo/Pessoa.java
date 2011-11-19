@@ -59,7 +59,7 @@ public class Pessoa {
 	private String cpf;
 	
 	@Column(name = "RG", length = 7)
-	private int rg;
+	private Integer rg;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATA_NASCIMENTO", length = 8)
@@ -209,11 +209,11 @@ public class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public int getRg() {
+	public Integer getRg() {
 		return rg;
 	}
 
-	public void setRg(int rg) {
+	public void setRg(Integer rg) {
 		this.rg = rg;
 	}
 

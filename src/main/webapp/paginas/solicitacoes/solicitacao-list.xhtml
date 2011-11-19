@@ -3,27 +3,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
 	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Sistema GEDWEB</title>
-        <link rel="stylesheet" type="text/css" href="../css/estilo.css"/>
 </h:head>
 <h:body>
 
 	<h1>Solicita&ccedil;oes Documentos</h1>
 	
-	<h:panelGrid columns="2" cellpadding="5">
+	<h:panelGrid columns="3" cellpadding="5">
+		<h:outputLabel value="Matricula Solicitante" /><br/>
+		<p:inputText id="matriculaSolicitante" style="width:100px;" value="#{controladorSolicitacao.solicitacao.solicitante.id}" />
+	
+		<h:outputLabel value="Solicitante" /><br/>
+		<p:inputText id="nomeSolicitante" maxlength="100" style=" width : 345px;" value="#{controladorSolicitacao.solicitacao.solicitante.nome}" />
+		<p:commandButton type="button" value="pesquisarSolicitante" onclick="dlg.show()" />  
+	</h:panelGrid>
+	
+	<h:panelGrid columns="3" cellpadding="5">
 		<h:panelGroup>
-			<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante" /><br/>
-			<h:inputText id="endereco"
-						 label="Endereço" maxlength="100" style="width:100px;" value="#{controladorAluno.aluno.endereco}" />
+			<h:outputLabel for="matriculaAtendente" value="Matricula Atendente" /><br/>
+			<h:inputText id="matriculaAtendente"
+						 label="Matricula Atendente" style="width:100px;" value="#{controladorSolicitacao.solicitacao.atendente.id}" />
 		</h:panelGroup>
 		
 		<h:panelGroup>
-			<h:outputLabel for="numeroCasa" value="N°" /><br/>
-			<h:inputText id="numeroCasa"
-						 label="N°" size="2" style="FONT-SIZE: xx-small; width:80px;" value="#{controladorAluno.aluno.numero}" />
+			<h:outputLabel for="nomeAtendente" value="Atendente" /><br/>
+			<h:inputText id="nomeAtendente"
+						 label="Atendente" maxlength="100" style=" width : 345px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}" />
+		</h:panelGroup>
+		<h:panelGroup>
+			<p:commandButton type="button" value="pesquisarAtendente" onclick="dlg.show()" />  
+		</h:panelGroup>
+	</h:panelGrid>
+	
+	<h:panelGrid columns="2" cellpadding="5">
+		<h:panelGroup>
+			<h:outputLabel for="departamento" value="Departamento" /><br/>
+			<h:inputText id="departamento"
+						 label="Departamento" style="width:100px;" value="	{controladorSolicitacao.departamento.solicitante}" />
 		</h:panelGroup>
 	</h:panelGrid>
 	
@@ -51,6 +71,18 @@
 	         </h:form>
 	    </h:column>
 	</h:dataTable>
-	<br/>	
+	<br/>
+	
+	<!--  modal de pesquisa de aluno-->
+	<p:dialog header="Pesquisar Solicitante" widgetVar="dlg" resizable="false" height="400" width="700">  
+    <h:form>   
+        <h:panelGrid columns="2" style="margin-bottom:10px">  
+            <h:outputLabel for="firstname" value="Firstname:" />  
+            <p:inputText id="firstname" value="#{controladorSolicitacao.solicitacao.solicitante.nome}" />  
+        </h:panelGrid>
+        <p:commandButton value="Submit" update=":display" oncomplete="dlg.hide();"/>
+    </h:form>
+      
+</p:dialog>  	
 </h:body>
 </html>

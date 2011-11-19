@@ -11,10 +11,8 @@ import br.com.modeloArquitetura.modelo.Aluno;
 
 public class Main {
 
-	//teste
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
-		
 
 		// PRIMEIRO MODO (usando o arquivo persistence.xml)
 //
@@ -110,23 +108,22 @@ public class Main {
 //		
 //		System.out.println("Novo nome: " +dentista.getNome()+", id : "+dentista.getId());
 		
-			
+		
+		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");// mesmo nome de persistence-unit
 		EntityManager em = emf.createEntityManager();
 
-		em.getTransaction().begin();
+		
 		Aluno aluno = new Aluno("turma",new Date(),100f,"login","senha");
 		
-		 em.persist(aluno);
 
 		// teste do Crud Generico. o metodo excluir está ok!!!
 		CrudGenerico crud = new CrudGenerico(Aluno.class, em);
-		
+		crud.adicionar(aluno);
 		aluno = (Aluno)crud.buscarPorChave(aluno.getId());
 		
 		crud.excluir(aluno);
 		
-		em.getTransaction().commit();
 		
 		em.close();
 		emf.close();
