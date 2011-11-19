@@ -11,6 +11,7 @@ import br.com.modeloArquitetura.modelo.Aluno;
 
 public class Main {
 
+	//teste
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		
