@@ -10,79 +10,104 @@
         <title>Sistema GEDWEB</title>
 </h:head>
 <h:body>
+<h:form id="form">
 
-	<h1>Solicita&ccedil;oes Documentos</h1>
-	
-	<h:panelGrid columns="3" cellpadding="5">
-		<h:outputLabel value="Matricula Solicitante" /><br/>
-		<p:inputText id="matriculaSolicitante" style="width:100px;" value="#{controladorSolicitacao.solicitacao.solicitante.id}" />
-	
-		<h:outputLabel value="Solicitante" /><br/>
-		<p:inputText id="nomeSolicitante" maxlength="100" style=" width : 345px;" value="#{controladorSolicitacao.solicitacao.solicitante.nome}" />
-		<p:commandButton type="button" value="pesquisarSolicitante" onclick="dlg.show()" />  
-	</h:panelGrid>
-	
-	<h:panelGrid columns="3" cellpadding="5">
-		<h:panelGroup>
-			<h:outputLabel for="matriculaAtendente" value="Matricula Atendente" /><br/>
-			<h:inputText id="matriculaAtendente"
-						 label="Matricula Atendente" style="width:100px;" value="#{controladorSolicitacao.solicitacao.atendente.id}" />
-		</h:panelGroup>
-		
-		<h:panelGroup>
-			<h:outputLabel for="nomeAtendente" value="Atendente" /><br/>
-			<h:inputText id="nomeAtendente"
-						 label="Atendente" maxlength="100" style=" width : 345px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}" />
-		</h:panelGroup>
-		<h:panelGroup>
-			<p:commandButton type="button" value="pesquisarAtendente" onclick="dlg.show()" />  
-		</h:panelGroup>
-	</h:panelGrid>
-	
-	<h:panelGrid columns="2" cellpadding="5">
-		<h:panelGroup>
-			<h:outputLabel for="departamento" value="Departamento" /><br/>
-			<h:inputText id="departamento"
-						 label="Departamento" style="width:100px;" value="	{controladorSolicitacao.departamento.solicitante}" />
-		</h:panelGroup>
-	</h:panelGrid>
-	
-	<h:dataTable var="aluno" value="#{controladorAluno.listarAlunos}">
-		<h:column>
-		    <f:facet name="header">
-		        <h:outputText value="Nome"/>
-		    </f:facet>
-		    <h:outputText value="#{aluno.nome}"/>
-	    </h:column>
-	    <h:column>
-	        <f:facet name="header">
-	            <h:outputText value="Alterar"/>
-	        </f:facet>
-	        <h:form>
-	            <h:commandButton action="#{controladorAluno.prepararAlterar}" value="Alterar"/>
-	         </h:form>
-	    </h:column>
-	    <h:column>
-	        <f:facet name="header">
-	            <h:outputText value="Excluir"/>
-	        </f:facet>
-	        <h:form>
-	            <h:commandButton action="#{controladorAluno.excluir}" value="Excluir"/>
-	         </h:form>
-	    </h:column>
-	</h:dataTable>
-	<br/>
-	
-	<!--  modal de pesquisa de aluno-->
-	<p:dialog header="Pesquisar Solicitante" widgetVar="dlg" resizable="false" height="400" width="700">  
-    <h:form>   
-        <h:panelGrid columns="2" style="margin-bottom:10px">  
-            <h:outputLabel for="firstname" value="Firstname:" />  
-            <p:inputText id="firstname" value="#{controladorSolicitacao.solicitacao.solicitante.nome}" />  
+    <p:growl id="msgs" showDetail="true" />
+
+    <p:dataTable id="solicitacoes" var="car" value="#{controladorSolicitacao.solicitacoes}">
+
+        <p:column headerText="Model">
+            <h:outputText value="#{car.model}" />
+        </p:column>
+
+        <p:column headerText="Year">
+            <h:outputText value="#{car.year}" />
+        </p:column>
+
+        <p:column headerText="Manufacturer">
+            <h:outputText value="#{car.manufacturer}" />
+        </p:column>
+
+        <p:column headerText="Color">
+            <h:outputText value="#{car.color}" />
+        </p:column>
+
+        <p:column style="width:100px">
+             <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
+                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-search" title="View">
+                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
+                     <f:setPropertyActionListener value="#{false}" target="#{tableBean.editMode}" />
+                 </p:commandButton>
+                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">
+                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
+                     <f:setPropertyActionListener value="#{true}" target="#{tableBean.editMode}" />
+                 </p:commandButton>
+                 <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">
+                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
+                 </p:commandButton>
+             </h:panelGrid>
+        </p:column>
+
+    </p:dataTable>
+
+    <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" id="carDlg"
+                showEffect="fade" hideEffect="explode" modal="true">
+
+        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+            <f:facet name="header">
+                <p:graphicImage value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg"/>
+            </f:facet>
+
+            <h:outputText value="Model:" />
+            <h:panelGroup>
+                <h:outputText value="#{tableBean.selectedCar.model}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
+                <p:inputText value="#{tableBean.selectedCar.model}" rendered="#{tableBean.editMode}" required="true" label="Model"/>
+            </h:panelGroup>
+
+            <h:outputText value="Year:" />
+            <h:panelGroup>
+                <h:outputText value="#{tableBean.selectedCar.year}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
+                <p:inputText value="#{tableBean.selectedCar.year}" rendered="#{tableBean.editMode}" required="true" label="Year"/>
+            </h:panelGroup>
+
+            <h:outputText value="Manufacturer:" />
+            <h:panelGroup>
+                <h:outputText value="#{tableBean.selectedCar.manufacturer}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
+                <h:selectOneMenu value="#{tableBean.selectedCar.manufacturer}" rendered="#{tableBean.editMode}">
+                    <f:selectItems value="#{tableBean.manufacturers}" var="man" itemLabel="#{man}" itemValue="#{man}" />
+                </h:selectOneMenu>
+            </h:panelGroup>
+
+            <h:outputText value="Color:" />
+            <h:panelGroup>
+                <h:outputText value="#{tableBean.selectedCar.color}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
+                <h:selectOneMenu value="#{tableBean.selectedCar.color}" rendered="#{tableBean.editMode}">
+                    <f:selectItems value="#{tableBean.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
+                </h:selectOneMenu>
+            </h:panelGroup>
+
+            <f:facet name="footer">
+                <p:outputPanel rendered="#{tableBean.editMode}" layout="block" style="text-align:right">
+                    <p:commandButton value="Save" update="cars msgs" actionListener="#{tableBean.save}" 
+                                    oncomplete="onEditComplete(xhr,status,args)" image="ui-icon ui-icon-check"/>
+                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>
+
+                </p:outputPanel>
+            </f:facet>
         </h:panelGrid>
-        <p:commandButton value="Submit" update=":display" oncomplete="dlg.hide();"/>
-    </h:form>
-      
-</p:dialog>  	
+
+    </p:dialog>
+
+    <p:confirmDialog message="Are you sure?" width="200"
+                    showEffect="explode" hideEffect="explode"
+                    header="Confirm" severity="alert" widgetVar="confirmation">
+
+        <p:commandButton value="Yes sure" update="cars" actionListener="#{tableBean.delete}" oncomplete="confirmation.hide()"/>
+        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />
+
+    </p:confirmDialog>
+
+    </h:form>	
 </h:body>
 </html>
