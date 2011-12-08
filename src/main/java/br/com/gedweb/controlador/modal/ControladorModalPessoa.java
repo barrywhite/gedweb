@@ -33,11 +33,11 @@ public class ControladorModalPessoa {
 	}	
 	
 	public List<Pessoa> getPessoas() {
+		iniciar();
 		return pessoas;
 	}
 
 	public void setPessoas(List<Pessoa> pessoas) {
-		iniciar();
 		this.pessoas = pessoas;
 	}
 

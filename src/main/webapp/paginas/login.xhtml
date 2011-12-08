@@ -1,0 +1,26 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema GEDWEB</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:fieldset legend="Login - GEDWEB">
+			<h:panelGrid cellpadding="10">
+				<h:outputText for="usuario" value="Usuario" /> 
+					<p:inputText value="" />				
+				<h:outputText for="senha" value="Senha" />
+					<p:password feedback="Senha" minLength="4"></p:password>
+					<p:commandButton value="Iniciar" />
+			</h:panelGrid>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

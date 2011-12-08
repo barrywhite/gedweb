@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -26,8 +25,7 @@ public class Funcionario extends Pessoa{
 	@Column(name="CARGO", length = 30)
 	private String cargo;	
 	
-	@ManyToOne
-	@JoinColumn(name = "ID_DEPARTAMENTO")
+	@ManyToOne	
 	private Departamento departamento;
 	
 	public Funcionario() {

@@ -99,6 +99,10 @@ public class Pessoa {
 	public Pessoa() {
 		super();
 	}
+	
+	public Pessoa(String nome) {
+		this.nome = nome;
+	}
 
 	public Pessoa(Integer id, String nome, String endereco, int numero,
 			String complemento, String bairro, String cep, String cidade,

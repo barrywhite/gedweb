@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -14,82 +15,62 @@
 
     <p:growl id="msgs" showDetail="true" />
 
-    <p:dataTable id="solicitacoes" var="car" value="#{controladorSolicitacao.solicitacoes}">
+    <p:dataTable id="solicitacoes" var="solicitacao" value="#{controladorSolicitacao.solicitacoes}">
 
-        <p:column headerText="Model">
-            <h:outputText value="#{car.model}" />
+        <p:column headerText="Código">
+            <h:outputText value="#{solicitacao.id}" />
         </p:column>
 
-        <p:column headerText="Year">
-            <h:outputText value="#{car.year}" />
+        <p:column headerText="Solicitante">
+            <h:outputText value="#{solicitacao.solicitante}" />
         </p:column>
 
-        <p:column headerText="Manufacturer">
-            <h:outputText value="#{car.manufacturer}" />
+        <p:column headerText="Atendente">
+            <h:outputText value="#{solicitacao.atendente}" />
         </p:column>
 
-        <p:column headerText="Color">
-            <h:outputText value="#{car.color}" />
+        <p:column headerText="Tipo">
+            <h:outputText value="#{solicitacao.tipo}" />
         </p:column>
 
         <p:column style="width:100px">
              <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
-                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-search" title="View">
-                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
-                     <f:setPropertyActionListener value="#{false}" target="#{tableBean.editMode}" />
+                 <p:commandButton update=":form:display" oncomplete="solicitacaoDialog.show()" image="ui-icon ui-icon-search" title="View">
+                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.solicitacaoSelecionada}" />
+                     <f:setPropertyActionListener value="#{false}" target="#{controladorSolicitacao.editar}" />
                  </p:commandButton>
                  <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">
-                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
-                     <f:setPropertyActionListener value="#{true}" target="#{tableBean.editMode}" />
+                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.SolicitacaoSelecionada}" />
+                     <f:setPropertyActionListener value="#{true}" target="#{controladorSolicitacao.editar}" />
                  </p:commandButton>
                  <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">
-                     <f:setPropertyActionListener value="#{car}" target="#{tableBean.selectedCar}" />
+                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.solicitacaoSelecionada}" />
                  </p:commandButton>
              </h:panelGrid>
         </p:column>
 
     </p:dataTable>
 
-    <p:dialog header="Car Detail" widgetVar="carDialog" resizable="false" id="carDlg"
+    <p:dialog header="Solicitação" widgetVar="solicitacaoDialog" resizable="false" id="solicitacaoDlg"
                 showEffect="fade" hideEffect="explode" modal="true">
 
         <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
-
-            <f:facet name="header">
-                <p:graphicImage value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg"/>
-            </f:facet>
-
-            <h:outputText value="Model:" />
+        
+            <h:outputText value="Solicitante:" />
             <h:panelGroup>
-                <h:outputText value="#{tableBean.selectedCar.model}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
-                <p:inputText value="#{tableBean.selectedCar.model}" rendered="#{tableBean.editMode}" required="true" label="Model"/>
+                <h:outputText value="#{controladorSolicitacao.solicitacaoSelecionada.solicitante.nome}" style="font-weight:bold" rendered="#{!controladorSolicitacao.editar}"/>
+                <p:inputText value="#{controladorSolicitacao.solicitacaoSelecionada.solicitante.nome}" rendered="#{controladroSolicitacao.editar}" required="true" label="Solicitante"/>
             </h:panelGroup>
 
-            <h:outputText value="Year:" />
+            <h:outputText value="Atendente:" />
             <h:panelGroup>
-                <h:outputText value="#{tableBean.selectedCar.year}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
-                <p:inputText value="#{tableBean.selectedCar.year}" rendered="#{tableBean.editMode}" required="true" label="Year"/>
-            </h:panelGroup>
-
-            <h:outputText value="Manufacturer:" />
-            <h:panelGroup>
-                <h:outputText value="#{tableBean.selectedCar.manufacturer}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
-                <h:selectOneMenu value="#{tableBean.selectedCar.manufacturer}" rendered="#{tableBean.editMode}">
-                    <f:selectItems value="#{tableBean.manufacturers}" var="man" itemLabel="#{man}" itemValue="#{man}" />
-                </h:selectOneMenu>
-            </h:panelGroup>
-
-            <h:outputText value="Color:" />
-            <h:panelGroup>
-                <h:outputText value="#{tableBean.selectedCar.color}" style="font-weight:bold" rendered="#{!tableBean.editMode}"/>
-                <h:selectOneMenu value="#{tableBean.selectedCar.color}" rendered="#{tableBean.editMode}">
-                    <f:selectItems value="#{tableBean.colors}" var="color" itemLabel="#{color}" itemValue="#{color}" />
-                </h:selectOneMenu>
+                <h:outputText value="#{controladorSolicitacao.solicitacaoSelecionada.atendente.nome}" style="font-weight:bold" rendered="#{!controladorSolicitacao.editar}"/>
+                <p:inputText value="#{controladorSolicitacao.solicitacaoSelecionada.atendente.nome}" rendered="#{controladorSolicitacao.editar}" required="true" label="Year"/>
             </h:panelGroup>
 
             <f:facet name="footer">
-                <p:outputPanel rendered="#{tableBean.editMode}" layout="block" style="text-align:right">
-                    <p:commandButton value="Save" update="cars msgs" actionListener="#{tableBean.save}" 
+                <p:outputPanel rendered="#{controladorSolicitacao.editar}" layout="block" style="text-align:right">
+                    <p:commandButton value="Save" update="solicitacoes msgs" actionListener="#{controladorSolicitacao.salvar}" 
                                     oncomplete="onEditComplete(xhr,status,args)" image="ui-icon ui-icon-check"/>
                     <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>
 
@@ -99,12 +80,12 @@
 
     </p:dialog>
 
-    <p:confirmDialog message="Are you sure?" width="200"
+    <p:confirmDialog message="Deseja excluir o registro?" width="200"
                     showEffect="explode" hideEffect="explode"
                     header="Confirm" severity="alert" widgetVar="confirmation">
 
-        <p:commandButton value="Yes sure" update="cars" actionListener="#{tableBean.delete}" oncomplete="confirmation.hide()"/>
-        <p:commandButton value="Not yet" onclick="confirmation.hide()" type="button" />
+        <p:commandButton value="Sim" update="solicitacoes" actionListener="#{controladorSolicitacao.remover}" oncomplete="confirmation.hide()"/>
+        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />
 
     </p:confirmDialog>
 
