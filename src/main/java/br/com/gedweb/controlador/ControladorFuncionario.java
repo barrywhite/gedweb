@@ -13,8 +13,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import br.com.gedweb.crud.CrudGenerico;
-import br.com.gedweb.enuns.EnumEstadoCivil;
-import br.com.gedweb.enuns.EnumSexo;
+import br.com.gedweb.enuns.EstadoCivilEnum;
+import br.com.gedweb.enuns.SexoEnum;
 import br.com.gedweb.modelo.Funcionario;
 
 @ManagedBean(name = "controladorFuncionario")
@@ -107,18 +107,18 @@ public class ControladorFuncionario {
 	}
 
 	public SelectItem[] getEstadoCivil() {
-		SelectItem[] items = new SelectItem[EnumEstadoCivil.values().length];
+		SelectItem[] items = new SelectItem[EstadoCivilEnum.values().length];
 		int i = 0;
-		for(EnumEstadoCivil t: EnumEstadoCivil.values()) {
+		for(EstadoCivilEnum t: EstadoCivilEnum.values()) {
 			items[i++] = new SelectItem(t, t.name());
 		}
 		return items;
 	}
 	
 	public SelectItem[] getSexo() {
-		SelectItem[] items = new SelectItem[EnumSexo.values().length];
+		SelectItem[] items = new SelectItem[SexoEnum.values().length];
 		int i = 0;
-		for(EnumSexo s: EnumSexo.values()) {
+		for(SexoEnum s: SexoEnum.values()) {
 			items[i++] = new SelectItem(s, s.name());
 		}
 		return items;

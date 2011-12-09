@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TA_FUNCIONARIO")
+@Table(name = "FUNCIONARIO")
 @PrimaryKeyJoinColumn(name="ID_PESSOA", referencedColumnName="ID_PESSOA")
 public class Funcionario extends Pessoa{
 
@@ -39,8 +39,8 @@ public class Funcionario extends Pessoa{
 		this.dataAdmissao = dataAdmissao;
 		this.cargo = cargo;
 		this.departamento = departamento;
-		this.setLogin(login);
-		this.setSenha(senha);
+//		this.setLogin(login);
+//		this.setSenha(senha);
 	}
 
 	public float getSalario() {

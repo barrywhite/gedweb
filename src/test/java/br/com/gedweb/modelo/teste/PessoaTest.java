@@ -17,7 +17,7 @@ public class PessoaTest {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");
 		EntityManager em = emf.createEntityManager();
 		CrudGenerico crud =  new CrudGenerico(Pessoa.class, em);
-		crud.adicionar(new Pessoa("Teste Pessoa"));
+//		crud.adicionar(new Pessoa("Teste Pessoa"));
 	}
 	
 	

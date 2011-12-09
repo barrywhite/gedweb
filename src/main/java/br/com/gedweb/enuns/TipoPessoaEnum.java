@@ -1,12 +1,13 @@
 package br.com.gedweb.enuns;
 
-public enum EnumTipoPessoa {
+public enum TipoPessoaEnum {
 
-	ALUNO("ALUNO"), FUNCIONARIO("FUNCIONARIO");
+	ALUNO("ALUNO"),
+	FUNCIONARIO("FUNCIONARIO");
 	
 	private String tipo;
 
-	private EnumTipoPessoa(String tipo) {
+	private TipoPessoaEnum(String tipo) {
 		this.tipo = tipo;
 	}
 

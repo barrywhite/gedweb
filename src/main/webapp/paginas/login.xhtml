@@ -1,26 +1,42 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Sistema GEDWEB</title>
 </h:head>
 <h:body>
-	<h:form id="form">
-		<p:fieldset legend="Login - GEDWEB">
+	<div id="top" style="font-size: 14px; background-color: #f7b74d;"><ui:insert name="top">
+		<p:graphicImage url="/imagens/img_topo_gedweb.png" />
+		<p:graphicImage url="/imagens/img_topo_faepa.png" style="float:right"/>
+	</ui:insert></div>
+	<h:form id="form" style="font-size: 11px;">
+	<br />
+	<br />
+	<br />
+	<br />
+		<center><p:fieldset legend="Login - GEDWEB" style="width:100px">
 			<h:panelGrid cellpadding="10">
-				<h:outputText for="usuario" value="Usuario" /> 
-					<p:inputText value="" />				
+				<h:outputText for="usuario" value="Usuario" />
+				<p:inputText value="" />
 				<h:outputText for="senha" value="Senha" />
-					<p:password feedback="Senha" minLength="4"></p:password>
-					<p:commandButton value="Iniciar" />
+				<p:password feedback="Senha" minLength="4"></p:password>
+				<p:commandButton value="Iniciar" />
 			</h:panelGrid>
-		</p:fieldset>
+		</p:fieldset></center>
 	</h:form>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<div id="bottom"><ui:insert name="bottom">
+		<center style="background-color: #f7b74d; font-size: 11px; height: 50px"><br />
+		Copyright &copy; 2011. Todos os Direitos Reservados. <br />
+		Desenvolvido por Barry White, Fabio Roberto, Levy André e Wladmir Lindemberg</center>
+	</ui:insert></div>
+
 </h:body>
 </html>

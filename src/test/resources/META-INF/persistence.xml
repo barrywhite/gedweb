@@ -8,11 +8,12 @@
 	<persistence-unit name="unidadePersistence" transaction-type="RESOURCE_LOCAL">
 		
 		<class>br.com.gedweb.modelo.Pessoa</class>
+		<class>br.com.gedweb.modelo.Endereco</class>
+		<class>br.com.gedweb.modelo.Telefone</class>
 		<class>br.com.gedweb.modelo.Aluno</class>
 		<class>br.com.gedweb.modelo.Funcionario</class>
 		<class>br.com.gedweb.modelo.Departamento</class>
 		<class>br.com.gedweb.modelo.Solicitacao</class>		
-		<class>br.com.gedweb.modelo.TipoSolicitacao</class>
 		<class>br.com.gedweb.modelo.Tramite</class>
 		
 	<properties>

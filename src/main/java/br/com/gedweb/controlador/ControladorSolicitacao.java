@@ -8,17 +8,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.gedweb.crud.CrudGenerico;
 import br.com.gedweb.modelo.Solicitacao;
+import br.com.gedweb.modelo.TipoSolicitacao;
 
 @ManagedBean(name = "controladorSolicitacao")
 @SessionScoped
 public class ControladorSolicitacao {
 
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");
-	EntityManager em = emf.createEntityManager();
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");
+	private EntityManager em = emf.createEntityManager();
 
+	@SuppressWarnings("rawtypes")
+	private CrudGenerico crud = null;
 	private List<Solicitacao> Solicitacoes;
 	private Solicitacao solicitacaoSelecionada;
+	private TipoSolicitacao tipoSolicitacaoSelecionada;
 	private Boolean editar;
 
 	public ControladorSolicitacao() {
@@ -46,6 +51,20 @@ public class ControladorSolicitacao {
 
 	public Boolean getEditar() {
 		return editar;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<TipoSolicitacao> getTiposSolicitacao() {
+		crud = new CrudGenerico(TipoSolicitacao.class, em);
+		return crud.buscarTodos();
+	}
+
+	public void setTipoSolicitacaoSelecionada(TipoSolicitacao tipoSolicitacaoSelecionada) {
+		this.tipoSolicitacaoSelecionada = tipoSolicitacaoSelecionada;
+	}
+
+	public TipoSolicitacao getTipoSolicitacaoSelecionada() {
+		return tipoSolicitacaoSelecionada;
 	}
 
 }

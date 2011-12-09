@@ -2,7 +2,9 @@ package br.com.gedweb.modelo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,127 +14,66 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import br.com.gedweb.enuns.EnumEstadoCivil;
-import br.com.gedweb.enuns.EnumSexo;
-import br.com.gedweb.enuns.EnumTipoPessoa;
+import br.com.gedweb.enuns.EstadoCivilEnum;
+import br.com.gedweb.enuns.SexoEnum;
+import br.com.gedweb.enuns.TipoPessoaEnum;
 
 @Entity
-@Table(name = "TA_PESSOA")
+@Table(name = "PESSOA")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa {	
+public class Pessoa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_PESSOA")
 	private Integer id;
-	
-	@Column(name = "NOME", length = 100)
-	private String nome;
 
-	@Column(name = "ENDERECO", length = 100)
-	private String endereco;
-	
-	@Column(name = "NUMERO", length = 5)
-	private int numero;
+	@Column(length = 100)
+	String nome;
 
-	@Column(name = "COMPLEMENTO", length = 50)
-	private String complemento;
-	
-	@Column(name = "BAIRRO", length = 50)
-	private String bairro;
+	@Column(name = "data_nascimento", nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
 
-	@Column(name = "CEP", length = 8)
-	private String cep;
-	
-	@Column(name = "CIDADE", length = 100)
-	private String cidade;
+	@Column
+	private SexoEnum sexo;
 
-	@Column(name = "UF", length = 2)
-	private String uf;
-	
-	@Column(name = "CPF", length = 14)
-	private String cpf;
-	
-	@Column(name = "RG", length = 7)
+	@Column(name = "estado_civil", length = 20)
+	@Enumerated(EnumType.STRING)
+	private EstadoCivilEnum estadoCivil;
+
+	@Column
 	private Integer rg;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATA_NASCIMENTO", length = 8)
-	private Date dataNascimento;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "SEXO")
-	private EnumSexo sexo;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "ESTADO_CIVIL")
-	private EnumEstadoCivil estadoCivil;
-	
-	@Column(name = "EMAIL", length = 100)
-	private String email;
+	@Column(length = 14)
+	private String cpf;
 
-	@Column(name = "TELEFONE", length = 14)
-	private String telefone;
-	
-	@Column(name = "CELULAR", length = 14)
-	private String celular;
-	
-	@Column(name = "LOGIN", length = 20)
-	private String login;
-	
-	@Column(name = "SENHA", length = 20)
-	private String senha;
-	
-	@Column(name = "TIPO_PESSOA", length = 20)
+	@Column(length = 50)
+	private String emails;
+
+	@Column
 	@Enumerated(EnumType.STRING)
-	private EnumTipoPessoa tipoPessoa;
-		
-	@OneToMany
-	@JoinColumn(name = "ID_SOLICITACAO")
-	private List<Solicitacao> solicitacoes;
+	private TipoPessoaEnum tipoPessoa;
+
+	@Column
+	private String login;
+
+	@Column
+	String senha;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+	private List<Endereco> enderecos;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+	private Set<Telefone> telefones;
 
 	public Pessoa() {
-		super();
-	}
-	
-	public Pessoa(String nome) {
-		this.nome = nome;
 	}
 
-	public Pessoa(Integer id, String nome, String endereco, int numero,
-			String complemento, String bairro, String cep, String cidade,
-			String uf, String cpf, int rg, Date dataNascimento, EnumSexo sexo,
-			EnumEstadoCivil estadoCivil, String email, String telefone,
-			String celular, String login, String senha,
-			List<Solicitacao> solicitacoes) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.bairro = bairro;
-		this.cep = cep;
-		this.cidade = cidade;
-		this.uf = uf;
-		this.cpf = cpf;
-		this.rg = rg;
-		this.dataNascimento = dataNascimento;
-		this.sexo = sexo;
-		this.estadoCivil = estadoCivil;
-		this.email = email;
-		this.telefone = telefone;
-		this.celular = celular;
-		this.login = login;
-		this.senha = senha;
-		this.solicitacoes = solicitacoes;
-	}
-	
 	public Integer getId() {
 		return id;
 	}
@@ -149,68 +90,28 @@ public class Pessoa {
 		this.nome = nome;
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
-	public int getNumero() {
-		return numero;
+	public SexoEnum getSexo() {
+		return sexo;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setSexo(SexoEnum sexo) {
+		this.sexo = sexo;
 	}
 
-	public String getComplemento() {
-		return complemento;
+	public EstadoCivilEnum getEstadoCivil() {
+		return estadoCivil;
 	}
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setEstadoCivil(EstadoCivilEnum estadoCivil) {
+		this.estadoCivil = estadoCivil;
 	}
 
 	public Integer getRg() {
@@ -221,54 +122,30 @@ public class Pessoa {
 		this.rg = rg;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public EnumSexo getSexo() {
-		return sexo;
+	public String getEmails() {
+		return emails;
 	}
 
-	public void setSexo(EnumSexo sexo) {
-		this.sexo = sexo;
+	public void setEmails(String emails) {
+		this.emails = emails;
 	}
 
-	public EnumEstadoCivil getEstadoCivil() {
-		return estadoCivil;
+	public TipoPessoaEnum getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setEstadoCivil(EnumEstadoCivil estadoCivil) {
-		this.estadoCivil = estadoCivil;
+	public void setTipoPessoa(TipoPessoaEnum tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
-	}
-	
 	public String getLogin() {
 		return login;
 	}
@@ -284,26 +161,21 @@ public class Pessoa {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
-		this.solicitacoes = solicitacoes;
+
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public List<Solicitacao> getSolicitacoes() {
-		return solicitacoes;
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
-	public EnumTipoPessoa getTipoPessoa() {
-		return tipoPessoa;
+	public Set<Telefone> getTelefones() {
+		return telefones;
 	}
 
-	public void setTipoPessoa(EnumTipoPessoa tipoPessoa) {
-		this.tipoPessoa = tipoPessoa;
-	}
-
-	@Override
-	public String toString() {
-		return "Pessoa [id=" + id + ", nome=" + nome + "]";
+	public void setTelefones(Set<Telefone> telefones) {
+		this.telefones = telefones;
 	}
 
 	@Override

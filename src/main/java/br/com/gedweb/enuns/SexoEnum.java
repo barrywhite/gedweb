@@ -9,7 +9,7 @@ package br.com.gedweb.enuns;
  * 
  */
 
-public enum EnumSexo {
+public enum SexoEnum {
 	
 	MASCULINO("M"),
 	FEMININO("F");
@@ -17,7 +17,7 @@ public enum EnumSexo {
 	private String sexo;
 	
 	
-	private EnumSexo(String s) {
+	private SexoEnum(String s) {
 		sexo = s;
 	}
 

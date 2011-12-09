@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TA_DEPARTAMENTO")
+@Table(name = "DEPARTAMENTO")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Departamento {
 

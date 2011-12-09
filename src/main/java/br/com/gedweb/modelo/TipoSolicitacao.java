@@ -11,14 +11,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TA_TIPO_SOLICITACAO")
+@Table(name = "TIPO_SOLICITACAO")
 public class TipoSolicitacao {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_TIPO_SOLICITACAO")
 	private Integer id;
-	
+
+	@Column
+	private String nome;
+
 	@ManyToMany
 	private List<Solicitacao> solicitacoes;
 
@@ -30,26 +33,12 @@ public class TipoSolicitacao {
 		this.id = id;
 	}
 
-	@Column
-	private String nome;
-
-	@Column
-	private String observacao;
-
 	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
 	}
 
 	public List<Solicitacao> getSolicitacoes() {
@@ -70,8 +59,7 @@ public class TipoSolicitacao {
 
 	@Override
 	public String toString() {
-		return "TipoSolicitacao [id=" + id + ", nome=" + nome + ", observacao="
-				+ observacao + "]";
+		return "TipoSolicitacao [id=" + id + ", nome=" + nome + "]";
 	}
 
 	@Override

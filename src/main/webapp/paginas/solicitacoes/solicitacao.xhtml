@@ -1,171 +1,102 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Sistema GEDWEB</title>
-        <link rel="stylesheet" type="text/css" href="../css/estilo.css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema GEDWEB</title>
 </h:head>
 <h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="conteudo">
+			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Solicitação de Documentos</p>
+			<h:form style="font-size: 11px;">
+				<p:fieldset legend="Informações Solicitante">
+					<h:panelGrid cellpadding="5" columns="2">
+						<h:panelGroup>
+							<h:outputLabel for="MatriculaSolicitante" value="Matricula Solicitante:" />
+							<br />
+							<h:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" maxlength="100" size="10" style="width:100px;" value="001" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputLabel for="solicitante" value="Solicitante:" />
+							<br />
+							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:600px;" value="ALUNO OU FUNCIONARIO" />
+							<p:commandButton image="ui-icon ui-icon-search" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5">
 
-		<p class="titulo" style="font-size:20px; color: #1E90FF;">Cadastro de Aluno</p>
-	
-		<h:form>
-			<h:panelGrid cellpadding="5">
-				<h:panelGroup>
-					<h:outputLabel for="nome" value="Nome" /><br/>
-					<h:inputText id="nome" required="true"  
-								 label="Nome" maxlength="100" size="30" style="width:750px;" value="#{controladorAluno.aluno.nome}" />
-				</h:panelGroup>	
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:panelGroup>
-					<h:outputLabel for="endereco" value="Endereço" /><br/>
-					<h:inputText id="endereco"
-								 label="Endereço" maxlength="100" style="width:650px;" value="#{controladorAluno.aluno.endereco}" />
-				</h:panelGroup>
-				
-				<h:panelGroup>
-					<h:outputLabel for="numeroCasa" value="N°" /><br/>
-					<h:inputText id="numeroCasa"
-								 label="N°" size="2" style="FONT-SIZE: xx-small; width:80px;" value="#{controladorAluno.aluno.numero}" />
-				</h:panelGroup>
-			</h:panelGrid>
+						<p:dataTable var="tipoSolicitacao" value="#{controladorSolicitacao.tiposSolicitacao}" selection="#{controladorSolicitacao.tipoSolicitacaoSelecionada}"
+							style="max-width:800px;min-width:650px;">
 
-			<h:panelGrid columns="5" cellpadding="5">			
-				<h:panelGroup>
-					<h:outputLabel for="complemento" value="Complemento" /><br/>
-					<h:inputText id="complemento"
-								 label="Complemento" maxlength="50" style="width:120px;" value="#{controladorAluno.aluno.complemento}" />
-				</h:panelGroup>
-	
-				<h:panelGroup>
-					<h:outputLabel for="bairro" value="Bairro" /><br/>
-					<h:inputText id="bairro"
-								 label="Bairro" maxlength="50" style="width:200px;" value="#{controladorAluno.aluno.bairro}" />
-				</h:panelGroup>
-	
-				<h:panelGroup>
-					<h:outputLabel for="cep" value="CEP" /><br/>
-					<h:inputText id="cep" 
-					 			 label="CEP" maxlength="8" size="2" style="width:100px;" value="#{controladorAluno.aluno.cep}" />
-				</h:panelGroup>
-	
-				<h:panelGroup>
-					<h:outputLabel for="cidade" value="Cidade" /><br/>
-					<h:inputText id="cidade" 
-					 			 label="Cidade" maxlength="100" style="width:200px;" value="#{controladorAluno.aluno.cidade}" />
-				</h:panelGroup>
-	
-				<h:panelGroup>
-        			<h:outputLabel value="U.F. "/><br />
- 					<h:inputText id="uf" 
-								 label="uf" maxlength="2" style="width:50px;" value="#{controladorAluno.aluno.uf}" />
- 				</h:panelGroup>
-			</h:panelGrid>
+							<f:facet name="header"> 
+			            Tipos de Solicitação  
+			        </f:facet>
+							<p:column style="width:20%">
+								<f:facet name="header">
+									<h:outputText value="Código" />
+								</f:facet>
+								<h:outputText value="#{tipoSolicitacao.id}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{tipoSolicitacao.nome}" />
+							</p:column>
+							<f:facet name="footer">
+								<p:commandButton value="Adicionar" update="form:display" />
+								<p:commandButton value="Remover" update="form:display" />
+							</f:facet>
 
-			<h:panelGrid columns="5" cellpadding="5">
-				<h:panelGroup>
-					<h:outputLabel for="cpf" value="CPF" /><br/>
-					<h:inputText id="cpf" label="CPF" maxlength="14" style="width:130px;" value="#{controladorAluno.aluno.cpf}"/>
-				</h:panelGroup>
-					
-				<h:panelGroup>
-         			<h:outputLabel for="rg" value="RG" /><br />
-         			<h:inputText id="rg" label="RG" maxlength="7" style="width:130px;" value="#{controladorAluno.aluno.rg}"/>
-        		</h:panelGroup>
-        			
-        		<h:panelGroup>
-         			<h:outputLabel for="dataNascimento" value="Data de Nascimento" /><br />
-         			<h:inputText id="dataNascimento" 
-         						label="DataNascimento" maxlength="10" style="width:120px;" value="#{controladorAluno.aluno.dataNascimento}">
-         				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />	
-         			</h:inputText>
-         		</h:panelGroup>
-         			
-         		<h:panelGroup>
-					<h:outputLabel value="Sexo" /><br/>
-					<h:selectOneRadio id="sexo" size="1" value="#{controladorAluno.aluno.sexo}">
-						<f:selectItems value="#{controladorAluno.sexo}" var="s"
-						itemLabel="#{sexo.s}" itemValue="#{s}"/>
- 					</h:selectOneRadio>
-        		</h:panelGroup>	
-			
-				<h:panelGroup>
-				<h:outputLabel value="Estado Civil" /><br/>
-					<h:selectOneListbox id="tipo" size="1" value="#{controladorAluno.aluno.estadoCivil}">
-					<f:selectItems value="#{controladorAluno.estadoCivil}" var="t"
-						itemLabel="#{tipo.t}" itemValue="#{t}"/>
-				    </h:selectOneListbox>
-				</h:panelGroup>    			
-			</h:panelGrid>
-	
-			<h:panelGrid columns="3" cellpadding="5">
-     			<h:panelGroup>
-					<h:outputLabel for="email" value="E-mail" /><br/>
-					<h:inputText id="email"
-								 label="E-mail" maxlength="100" style="FONT-SIZE: large; width:400px;" value="#{controladorAluno.aluno.email}"/>						 
-				</h:panelGroup>
-		
-				<h:panelGroup>
-					<h:outputLabel for="telefone" value="Telefone" /><br/>
-					<h:inputText id="telefone" 
-								 label="Telefone" maxlength="14" style="width:130px;" value="#{controladorAluno.aluno.telefone}"/>
-				</h:panelGroup>
-		
-				<h:panelGroup>
-					<h:outputLabel for="celular" value="Celular" /><br/>
-					<h:inputText id="celular" 
-								 label="Celular" maxlength="14" style="width:130px;" value="#{controladorAluno.aluno.celular}"/>
-				</h:panelGroup>
-			</h:panelGrid>
+						</p:dataTable>
 
-			<h:panelGrid columns="5" cellpadding="6">			
+					</h:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Informações Atendimento">
+					<h:panelGrid cellpadding="5">
+						<h:panelGroup>
+							<h:outputLabel for="departamento" value="Destino (Departamento):" />
+							<br />
+							<h:inputText id="departamento" required="true" label="Departamento:" maxlength="100" size="10" style="width:600px;" value="DEPARTAMENTO DA INSTITUIÇÃO" />
+							<p:commandButton image="ui-icon ui-icon-search" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="2">
+						<h:panelGroup>
+							<h:outputLabel for="MatriculaAtendente" value="Matricula Atendente:" />
+							<br />
+							<h:inputText id="matriculaAtendente" required="true" label="Atendente:" maxlength="100" size="10" style="width:120px;" value="010" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputLabel for="Atendente" value="Atendente:" />
+							<br />
+							<h:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:600px;" value="FUNCIONARIO" />
+							<p:commandButton image="ui-icon ui-icon-search" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5">
+						<h:panelGroup>
+							<h:outputLabel for="Justificativa" value="Justificativa:" />
+							<br />
+							<p:inputTextarea value="" cols="85" rows="3"></p:inputTextarea>
+						</h:panelGroup>
+					</h:panelGrid>
+
+				</p:fieldset>
+				<br />
+				<br />
 				<h:panelGroup>
-					<h:outputLabel for="turma" value="Turma" /><br/>
-					<h:inputText id="turma"
-								 label="Turma" maxlength="30" style="width:130px;" value="#{controladorAluno.aluno.turma}"/>
+					<h:panelGrid columns="3">
+						<p:commandButton value="Salvar" />
+						<p:commandButton value="Alterar" />
+						<p:commandButton value="Voltar" />
+					</h:panelGrid>
 				</h:panelGroup>
-				
-				<h:panelGroup>
-					<h:outputLabel for="dataMatricula" value="Data Matricula" /><br/>
-					<h:inputText  id="dataMatricula"
-								 label="DataMatricula" maxlength="10" style="width:120px;"  value="#{controladorAluno.aluno.dataMatricula}">
-						<f:convertDateTime type="date" pattern="dd/MM/yyyy" />			
-					</h:inputText>
-				</h:panelGroup>
-				
-				<h:panelGroup>
-					<h:outputLabel for="mensalidade" value="Mensalidade" /><br/>
-					<h:inputText  id="mensalidade"
-								 label="Mensalidade" maxlength="8" style="width:120px;"  value="#{controladorAluno.aluno.mensalidade}"/>
-				</h:panelGroup>
-				
-				<h:panelGroup>
-					<h:outputLabel for="login" value="Login" /><br/>
-					<h:inputText id="login"
-								 label="Login" maxlength="30" style="width:150px;" value="#{controladorAluno.aluno.login}"/>
-				</h:panelGroup>
-				
-				<h:panelGroup>
-					<h:outputLabel for="senha" value="Senha" /><br/>
-					<h:inputSecret id="senha"
-								 label="Senha" maxlength="8" style="width:150px;"  value="#{controladorAluno.aluno.senha}"/>
-				</h:panelGroup>
-			</h:panelGrid>
-			
-			<h:panelGroup>
-				<h:commandButton value="Salvar" action="#{controladorAluno.adicionar}" />
-				<h:commandButton value="Alterar" action="#{controladorAluno.alterar}" />
-				<br /><br />
-				<h:commandButton value="Voltar" action="aluno-list" />
-				
-			</h:panelGroup>
-		
-		</h:form>	
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

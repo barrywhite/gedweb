@@ -10,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TA_ALUNO")
+@Table(name = "ALUNO")
 @PrimaryKeyJoinColumn(name="ID_PESSOA", referencedColumnName="ID_PESSOA")
 public class Aluno extends Pessoa {
 

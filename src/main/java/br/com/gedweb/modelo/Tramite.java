@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TA_TRAMITE")
+@Table(name = "TRAMITE")
 public class Tramite {
 
 	@Id
