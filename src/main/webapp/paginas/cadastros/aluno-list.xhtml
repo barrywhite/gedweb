@@ -1,45 +1,101 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Sistema GEDWEB</title>
-        <link rel="stylesheet" type="text/css" href="../css/estilo.css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema GEDWEB</title>
 </h:head>
 <h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="conteudo">
+			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Alunos</p>
+			<h:form style="font-size: 11px;">
+				<p:fieldset legend="Filtro de Busca" style="max-width:800px;font-size:11px">
+					<h:panelGrid cellpadding="5" columns="2" style="font-size:12px">
+						<h:panelGroup>
+							<h:outputLabel for="MatriculaAluno" value="Matricula Aluno:" />
+							<br />
+							<h:inputText id="matriculaAluno" required="true" label="Matricula Aluno" maxlength="100" size="10" style="width:100px;" value="" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputLabel for="aluno" value="Aluno:" />
+							<br />
+							<h:inputText id="aluno" required="true" label="Aluno" maxlength="100" size="20" style="width:600px;" value="" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="2">
+						<h:panelGroup>
+							<h:outputLabel for="rg" value="RG:" />
+							<br />
+							<h:inputText id="rg" required="true" label="RG:" maxlength="100" size="10" style="width:100px;" value="" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputLabel for="cpf" value="CPF:" />
+							<br />
+							<h:inputText id="cpf" required="true" label="CPF" maxlength="100" size="20" style="width:120px;" value="" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="2">
+						<h:panelGroup>
+							<p:commandButton value="Pesquisar" image="ui-icon ui-icon-search" style="font-size:12px"/>
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:fieldset>
+				<br />
+				
+				<p:fieldset legend="Detalhes Aluno" style="max-width:800px;font-size:11px" >
+					<h:panelGrid cellpadding="5" style="font-size:12px">
+						<p:dataTable var="aluno" value="#{controladorAluno.alunos}" selection="#{controladorAluno.alunoSelecionado}" style="max-width:800px;min-width:750px;">
 
-	<h1>Cadastro de Aluno</h1>
-	<h:dataTable var="aluno" value="#{controladorAluno.listarAlunos}">
-		<h:column>
-		    <f:facet name="header">
-		        <h:outputText value="Nome"/>
-		    </f:facet>
-		    <h:outputText value="#{aluno.nome}"/>
-	    </h:column>
-	    <h:column>
-	        <f:facet name="header">
-	            <h:outputText value="Alterar"/>
-	        </f:facet>
-	        <h:form>
-	            <h:commandButton action="#{controladorAluno.prepararAlterar}" value="Alterar"/>
-	         </h:form>
-	    </h:column>
-	    <h:column>
-	        <f:facet name="header">
-	            <h:outputText value="Excluir"/>
-	        </f:facet>
-	        <h:form>
-	            <h:commandButton action="#{controladorAluno.excluir}" value="Excluir"/>
-	         </h:form>
-	    </h:column>
-	</h:dataTable>
-	<br/>
-	<h:form>
-	    <h:commandLink value="Novo Aluno" action="#{controladorAluno.prepararAdicionar}"/>
-	</h:form>	
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Ações" style="width:5%" />
+								</f:facet>
+								<p:commandButton value="" image="ui-icon ui-icon-arrowrefresh-1-w" update="form:display" title="Editar" />
+								<p:commandButton value="" image="ui-icon ui-icon-close" update="form:display" title="Excluir" />
+							</p:column>
+
+							<p:column style="width:10%">
+								<f:facet name="header">
+									<h:outputText value="Matricula" />
+								</f:facet>
+								<h:outputText value="#{aluno.id}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{aluno.nome}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="RG:" />
+								</f:facet>
+								<h:outputText value="#{aluno.rg}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="CPF" />
+								</f:facet>
+								<h:outputText value="#{aluno.cpf}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
+
+				</p:fieldset>
+
+				<h:panelGroup style="font-size:12px">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Novo" image="ui-icon ui-icon-document" />
+						<p:commandButton value="Limpar" />
+					</h:panelGrid>
+					<br />
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

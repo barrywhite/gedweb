@@ -1,12 +1,13 @@
 package br.com.gedweb.controlador;
 
+import java.util.List;
+
 import javax.el.ELContext;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,29 +21,28 @@ import br.com.gedweb.modelo.Aluno;
 @ManagedBean(name = "controladorAluno")
 @SessionScoped
 public class ControladorAluno {
-	
 
-	ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-	EntityManager entityManager = (EntityManager) FacesContext.getCurrentInstance().getApplication().getELResolver().
-		getValue(elContext, null, "entityManager");
-	
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");
-	EntityManager em = emf.createEntityManager();
+	private ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+	private EntityManager entityManager = (EntityManager) FacesContext.getCurrentInstance().getApplication().getELResolver().getValue(elContext, null, "entityManager");
 
-	private Aluno aluno;	
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadePersistence");
+	private EntityManager em = emf.createEntityManager();
+
+	private Aluno alunoSelecionado;
 	private DataModel<Aluno> listaAlunos;
+	private CrudGenerico crud;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String adicionar() {
 		CrudGenerico crud = new CrudGenerico(Aluno.class, this.em);
-		crud.adicionar(aluno);
+		crud.adicionar(alunoSelecionado);
 		return "aluno-list";
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String alterar() {
 		CrudGenerico crud = new CrudGenerico(Aluno.class, this.em);
-		crud.alterar(aluno);
+		crud.alterar(alunoSelecionado);
 		return "aluno-list";
 	}
 
@@ -52,56 +52,31 @@ public class ControladorAluno {
 		crud.excluir(listaAlunos.getRowData());
 		return "aluno-list";
 	}
-	
+
 	public String prepararAdicionar() {
-		aluno = new Aluno();
+		alunoSelecionado = new Aluno();
 		return "aluno";
 	}
 
 	public String prepararAlterar() {
-		aluno = listaAlunos.getRowData();
+		alunoSelecionado = listaAlunos.getRowData();
 		return "aluno";
 	}
-	
+
 	public String prepararExcluir() {
-		aluno = listaAlunos.getRowData();
+		alunoSelecionado = listaAlunos.getRowData();
 		return "aluno";
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void buscarPorFiltro(ActionEvent ae) {
 		CrudGenerico crud = new CrudGenerico(Aluno.class, this.em);
-		crud.buscarPorFiltro(this.aluno);
+		crud.buscarPorFiltro(this.alunoSelecionado);
 
-		this.aluno = new Aluno();
+		this.alunoSelecionado = new Aluno();
 	}
 
-	public DataModel<Aluno> buscarTodos() {
-		return getListarAlunos();
-	}
-
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public DataModel<Aluno> getListarAlunos() {
-		CrudGenerico crud = new CrudGenerico(Aluno.class, this.em);
-		listaAlunos = new ListDataModel<Aluno>(crud.buscarTodos());
-		return listaAlunos;
-	}
+	
 
 	public void salvar() {
 
@@ -110,19 +85,36 @@ public class ControladorAluno {
 	public SelectItem[] getEstadoCivil() {
 		SelectItem[] items = new SelectItem[EstadoCivilEnum.values().length];
 		int i = 0;
-		for(EstadoCivilEnum t: EstadoCivilEnum.values()) {
+		for (EstadoCivilEnum t : EstadoCivilEnum.values()) {
 			items[i++] = new SelectItem(t, t.name());
 		}
 		return items;
 	}
-	
+
 	public SelectItem[] getSexo() {
 		SelectItem[] items = new SelectItem[SexoEnum.values().length];
 		int i = 0;
-		for(SexoEnum s: SexoEnum.values()) {
+		for (SexoEnum s : SexoEnum.values()) {
 			items[i++] = new SelectItem(s, s.name());
 		}
 		return items;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+	
+	}
+
+	public List<Aluno> getAlunos() {
+		crud = new CrudGenerico(Aluno.class, this.em);
+		return crud.buscarTodos() ;
+	}
+
+	public void setAlunoSelecionado(Aluno aluno) {
+		this.alunoSelecionado = aluno;
+	}
+
+	public Aluno getAlunoSelecionado() {
+		return this.alunoSelecionado;
 	}
 
 }
