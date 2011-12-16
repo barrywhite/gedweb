@@ -142,7 +142,7 @@
   		<!-- para o tema blitzer do primefaces -->
   		<dependency>  
     		<groupId>org.primefaces.themes</groupId>  
-    		<artifactId>bluesky</artifactId>  
+    		<artifactId>ui-lightness</artifactId>  
     		<version>1.0.1</version>  
   		</dependency>	
 		
