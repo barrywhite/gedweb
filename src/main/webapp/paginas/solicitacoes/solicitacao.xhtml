@@ -17,27 +17,21 @@
 						<h:panelGrid columns="2">
 							<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
 							<h:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
-								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true">
-
+								value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true">
 							</h:inputText>
 						</h:panelGrid>
-						<h:panelGrid columns="3">
+						<h:panelGrid columns="4">
 							<h:outputLabel for="solicitante" value="Solicitante:" />
-							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:500px;"
+							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:400px;"
 								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
 							<p:commandButton image="ui-icon ui-icon-search" onclick="modalFuncionario.show()" />
+							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
 						</h:panelGrid>
 					</h:panelGrid>
-					<h:panelGrid columns="3">
-						<h:outputLabel for="listaObjetivos" value="Objetivos:" />
-						<h:selectOneListbox id="listaObjetivos" style="width: 300px;" value="#{controladorSolicitacao.tipoSolicitacaoSelecionada}">
-							<f:selectItems value="#{controladorSolicitacao.tiposSolicitacao}" var="o" itemLabel="#{o.nome}" itemValue="#{o.id}" />
-						</h:selectOneListbox>
-						<p:commandButton value="Incluir" actionListener="#{controladorSolicitacao.adiionarObjetivo}"  ajax="false" />
-					</h:panelGrid>
+
 					<h:panelGrid cellpadding="5">
 						<p:dataTable var="tipoSolicitacao" value="#{controladorSolicitacao.solicitacao.tiposSolicitacao}" selection="#{controladorSolicitacao.tipoSolicitacaoSelecionada}"
-							style="max-width:800px;min-width:650px;">
+							selectionMode="single" style="max-width:800px;min-width:650px;">
 							<f:facet name="header"> 
 			            		Tipos de Solicitação  
 			        		</f:facet>
@@ -54,6 +48,7 @@
 								<h:outputText value="#{tipoSolicitacao.nome}" />
 							</p:column>
 							<f:facet name="footer">
+								<p:commandButton value="Adicionar" onclick="modalObjetivo.show()" />
 								<p:commandButton value="Remover" actionListener="#{controladorSolicitacao.removerObjetivo}" ajax="false" />
 							</f:facet>
 						</p:dataTable>
@@ -62,23 +57,23 @@
 
 				<p:fieldset legend="Informações Atendimento">
 					<h:panelGrid cellpadding="5">
-						<h:panelGroup>
+						<h:panelGrid columns="4">
 							<h:outputLabel for="departamento" value="Destino (Departamento):" />
-							<br />
-							<h:inputText id="departamento" required="true" label="Departamento:" maxlength="100" size="10" style="width:600px;" value="DEPARTAMENTO DA INSTITUIÇÃO" />
-							<p:commandButton image="ui-icon ui-icon-search" />
-						</h:panelGroup>
+							<h:inputText id="departamento" required="true" maxlength="100" size="10" style="width:400px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true"/>
+							<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
+							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerDepartamento}" update="formSolicitacao" />
+						</h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5" columns="2">
 						<h:panelGroup>
 							<h:outputLabel for="MatriculaAtendente" value="Matricula Atendente:" />
 							<br />
-							<h:inputText id="matriculaAtendente" required="true" label="Atendente:" maxlength="100" size="10" style="width:120px;" value="010" />
+							<h:inputText id="matriculaAtendente" required="true" maxlength="100" size="10" style="width:120px;" value="010" />
 						</h:panelGroup>
 						<h:panelGroup>
 							<h:outputLabel for="Atendente" value="Atendente:" />
 							<br />
-							<h:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:600px;" value="FUNCIONARIO" />
+							<h:inputText id="atendente" required="true" maxlength="100" size="20" style="width:600px;" value="FUNCIONARIO" />
 							<p:commandButton image="ui-icon ui-icon-search" />
 						</h:panelGroup>
 					</h:panelGrid>
@@ -116,10 +111,40 @@
 						<f:facet name="footer">
 							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalFuncionario.hide()" />
 						</f:facet>
-
 					</p:dataTable>
-
 				</p:dialog>
+
+				<!-- Modal Pesquisar Departamento -->
+				<p:dialog header="Pesquisar Departamento" widgetVar="modalDepartamento" modal="true" width="600" height="400">
+					<p:dataTable var="departamento" value="#{controladorSolicitacao.departamentos}" selection="#{controladorSolicitacao.departamento}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Departamento" />
+							</f:facet>
+							<h:outputText value="#{departamento.nome}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalDepartamento.hide()" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<!-- Modal Pesquisar Objetivo -->
+				<p:dialog header="Pesquisar Objetivo" widgetVar="modalObjetivo" modal="true" width="600" height="400">
+					<p:dataTable var="objetivo" value="#{controladorSolicitacao.tiposSolicitacao}" selection="#{controladorSolicitacao.tipoSolicitacaoSelecionada}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+							<h:outputText value="#{objetivo.nome}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" actionListener="#{controladorSolicitacao.adicionarObjetivo}" update="tipoSolicitacao"
+								oncomplete="modalObjetivo.hide()" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
 				<br />
 				<br />
 				<h:panelGroup>
@@ -129,6 +154,7 @@
 						<p:commandButton value="Voltar" />
 					</h:panelGrid>
 				</h:panelGroup>
+
 			</h:form>
 		</ui:define>
 	</ui:composition>

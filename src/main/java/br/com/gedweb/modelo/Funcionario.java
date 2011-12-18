@@ -16,9 +16,6 @@ import javax.persistence.TemporalType;
 public class Funcionario extends Pessoa{
 
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="SALARIO", length = 5)

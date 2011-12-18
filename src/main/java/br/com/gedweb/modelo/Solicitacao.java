@@ -38,7 +38,7 @@ public class Solicitacao {
 	@ManyToOne
 	private Pessoa solicitante;
 
-	@ManyToOne
+	@ManyToOne(optional=true)
 	private Pessoa atendente;
 	
 	@OneToMany(mappedBy = "solicitacoes")
