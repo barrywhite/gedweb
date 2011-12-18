@@ -13,10 +13,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.com.gedweb.crud.CrudGenerico;
+import br.com.gedweb.dao.CrudGenerico;
 import br.com.gedweb.enuns.EstadoCivilEnum;
 import br.com.gedweb.enuns.SexoEnum;
 import br.com.gedweb.modelo.Aluno;
+
 
 @ManagedBean(name = "controladorAluno")
 @SessionScoped
@@ -71,7 +72,7 @@ public class ControladorAluno {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void buscarPorFiltro(ActionEvent ae) {
 		CrudGenerico crud = new CrudGenerico(Aluno.class, this.em);
-		crud.buscarPorFiltro(this.alunoSelecionado);
+//		crud.buscarPorFiltro(this.alunoSelecionado);
 
 		this.alunoSelecionado = new Aluno();
 	}

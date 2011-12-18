@@ -14,6 +14,11 @@ import javax.persistence.TemporalType;
 @PrimaryKeyJoinColumn(name="ID_PESSOA", referencedColumnName="ID_PESSOA")
 public class Aluno extends Pessoa {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "TURMA", length = 100)
 	private String turma;
 	

@@ -10,20 +10,23 @@
 <h:body>
 	<div id="top" style="font-size: 14px; background-color: #f7b74d;"><ui:insert name="top">
 		<p:graphicImage url="/imagens/img_topo_gedweb.png" />
-		<p:graphicImage url="/imagens/img_topo_faepa.png" style="float:right"/>
+		<p:graphicImage url="/imagens/img_topo_faepa.png" style="float:right" />
 	</ui:insert></div>
-	<h:form id="form" style="font-size: 11px;">
 	<br />
 	<br />
 	<br />
 	<br />
-		<center><p:fieldset legend="Login - GEDWEB" style="width:100px">
-			<h:panelGrid cellpadding="10">
-				<h:outputText for="usuario" value="Usuario" />
-				<p:inputText value="" />
-				<h:outputText for="senha" value="Senha" />
-				<p:password feedback="Senha" minLength="4"></p:password>
-				<p:commandButton value="Iniciar" />
+	<h:form id="formLogin" prependId="false" style="font-size: 11px;">
+		<center><p:fieldset legend="Login - GEDWEB" style="width:350px" id="formulario">
+			
+			<h:panelGrid cellpadding="10" columns="3">
+				<h:outputLabel value="Usuario" for="usuario" />
+				<p:inputText id="usuario" value="#{controladorLogin.pessoa.login}" required="true" requiredMessage="Campo Obrigatório" label="Usuário" />
+				<p:message for="usuario" />
+				<h:outputLabel value="Senha" for="senha" />
+				<p:password id="senha" minLength="4" value="#{controladorLogin.pessoa.senha}" required="true" requiredMessage="Campo Obrigatório" label="Senha" />
+				<p:message for="senha" />
+				<p:commandButton id="enviar" action="#{controladorLogin.Logar}" value="Logar" ajax="false" />
 			</h:panelGrid>
 		</p:fieldset></center>
 	</h:form>

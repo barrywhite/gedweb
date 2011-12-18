@@ -15,6 +15,12 @@ import javax.persistence.TemporalType;
 @PrimaryKeyJoinColumn(name="ID_PESSOA", referencedColumnName="ID_PESSOA")
 public class Funcionario extends Pessoa{
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name="SALARIO", length = 5)
 	private float salario;
 	

@@ -1,13 +1,12 @@
 package br.com.gedweb.modelo;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +21,9 @@ public class TipoSolicitacao {
 	@Column
 	private String nome;
 
-	@ManyToMany
-	private List<Solicitacao> solicitacoes;
+	@ManyToOne
+	@JoinColumn(name = "id_solicitacao")
+	private Solicitacao solicitacoes;
 
 	public Integer getId() {
 		return id;
@@ -41,12 +41,12 @@ public class TipoSolicitacao {
 		this.nome = nome;
 	}
 
-	public List<Solicitacao> getSolicitacoes() {
-		return solicitacoes;
+	public void setSolicitacoes(Solicitacao solicitacoes) {
+		this.solicitacoes = solicitacoes;
 	}
 
-	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
-		this.solicitacoes = solicitacoes;
+	public Solicitacao getSolicitacoes() {
+		return solicitacoes;
 	}
 
 	@Override

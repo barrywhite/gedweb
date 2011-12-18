@@ -1,5 +1,6 @@
 package br.com.gedweb.modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,30 +23,30 @@ public class Solicitacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_SOLICITACAO")
 	private Integer id;
-	
+
 	@Column
 	private String justificativa;
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATA_CRIACAO")
+	@Column(name = "DATA_CRIACAO")
 	private Date dataCriacao;
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATA_CONCLUSAO")
+	@Column(name = "DATA_CONCLUSAO")
 	private Date dataConclusao;
-	
-	@ManyToMany(mappedBy="solicitacoes")
-	private List<TipoSolicitacao> tiposSolicitacao;
-	
+
 	@ManyToOne
 	private Pessoa solicitante;
 
 	@ManyToOne
 	private Pessoa atendente;
 	
-	@OneToMany(mappedBy="solicitacao")
-	private List<Tramite> tramites;
-	
+	@OneToMany(mappedBy = "solicitacoes")
+	private List<TipoSolicitacao> tiposSolicitacao = new ArrayList<TipoSolicitacao>();
+
+	@OneToMany(mappedBy = "solicitacao")
+	private List<Tramite> tramites = new ArrayList<Tramite>();
+
 	public Solicitacao() {
 	}
 
@@ -97,7 +97,7 @@ public class Solicitacao {
 	public void setAtendente(Pessoa atendente) {
 		this.atendente = atendente;
 	}
-	
+
 	public List<TipoSolicitacao> getTiposSolicitacao() {
 		return tiposSolicitacao;
 	}
@@ -116,9 +116,7 @@ public class Solicitacao {
 
 	@Override
 	public String toString() {
-		return "Solicitacao [id=" + id + ", justificativa=" + justificativa
-				+ ", dataCriacao=" + dataCriacao + ", dataConclusao="
-				+ dataConclusao + ", solicitante=" + solicitante
+		return "Solicitacao [id=" + id + ", justificativa=" + justificativa + ", dataCriacao=" + dataCriacao + ", dataConclusao=" + dataConclusao + ", solicitante=" + solicitante
 				+ ", atendente=" + atendente + "]";
 	}
 
@@ -126,8 +124,7 @@ public class Solicitacao {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((atendente == null) ? 0 : atendente.hashCode());
+		result = prime * result + ((atendente == null) ? 0 : atendente.hashCode());
 		return result;
 	}
 

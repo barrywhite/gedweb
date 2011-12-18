@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 import org.junit.Test;
 
-import br.com.gedweb.crud.CrudGenerico;
+import br.com.gedweb.dao.CrudGenerico;
 import br.com.gedweb.modelo.Pessoa;
 
 

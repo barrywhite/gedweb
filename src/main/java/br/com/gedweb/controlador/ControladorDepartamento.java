@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.com.gedweb.crud.CrudGenerico;
+import br.com.gedweb.dao.CrudGenerico;
 import br.com.gedweb.modelo.Departamento;
 
 @ManagedBean(name = "controladorDepartamento")
@@ -66,8 +66,8 @@ public class ControladorDepartamento {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void buscarPorFiltro(ActionEvent ae) {
-		CrudGenerico crud = new CrudGenerico(Departamento.class, this.em);
-		crud.buscarPorFiltro(this.departamento);
+//		CrudGenerico crud = new CrudGenerico(Departamento.class, this.em);
+//		crud.buscarPorFiltro(this.departamento);
 
 		this.departamento = new Departamento();
 	}

@@ -1,8 +1,10 @@
+
 package br.com.gedweb.modelo;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,7 +30,11 @@ import br.com.gedweb.enuns.TipoPessoaEnum;
 @Entity
 @Table(name = "PESSOA")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pessoa {
+@NamedQueries({ 
+	@NamedQuery(name = "Pessoa.findLogin", query = "SELECT p FROM Pessoa p WHERE p.login = :login AND senha = :senha")})
+public class Pessoa implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_PESSOA")
@@ -63,15 +71,20 @@ public class Pessoa {
 	private String login;
 
 	@Column
-	String senha;
+	private String senha;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-	private List<Endereco> enderecos;
+	private List<Endereco> enderecos = new ArrayList<Endereco>();
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-	private Set<Telefone> telefones;
+	private List<Telefone> telefones = new ArrayList<Telefone>();
 
 	public Pessoa() {
+	}
+
+	public Pessoa(String login, String senha) {
+		this.login = login;
+		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -170,11 +183,11 @@ public class Pessoa {
 		this.enderecos = enderecos;
 	}
 
-	public Set<Telefone> getTelefones() {
+	public List<Telefone> getTelefones() {
 		return telefones;
 	}
 
-	public void setTelefones(Set<Telefone> telefones) {
+	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
 

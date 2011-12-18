@@ -1,4 +1,4 @@
-package br.com.gedweb.crud;
+package br.com.gedweb.dao;
 
 /*
  * Create - Adicionar nova entidade no banco de dados
@@ -10,6 +10,7 @@ package br.com.gedweb.crud;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,12 +21,16 @@ public class CrudGenerico<T, PK extends Serializable> implements ICrudGenerico<T
 
 	private final Class<T> classePersistente;
 
-	private EntityManager entityManager;
+	protected EntityManager entityManager;
 
-	public CrudGenerico(final Class<T> classePersistente, EntityManager entityManager) {
+	public CrudGenerico(Class<T> classePersistente, EntityManager entityManager) {
 		this.classePersistente = classePersistente;
 		this.entityManager = entityManager;
 
+	}
+
+	public CrudGenerico(Class<T> classePersistente) {
+		this.classePersistente = classePersistente;
 	}
 
 	@Override
@@ -35,7 +40,7 @@ public class CrudGenerico<T, PK extends Serializable> implements ICrudGenerico<T
 
 	@Override
 	public Boolean adicionar(final T objeto) {
-		
+
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(objeto);
 		this.entityManager.flush();
@@ -47,12 +52,6 @@ public class CrudGenerico<T, PK extends Serializable> implements ICrudGenerico<T
 	@Override
 	public T buscarPorChave(PK primaryKey) {
 		return this.entityManager.find(this.classePersistente, primaryKey);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<T> buscarPorFiltro(T filtro) {
-		return (List<T>) this.entityManager.find(this.classePersistente, filtro);// nao funcionando
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -89,11 +88,6 @@ public class CrudGenerico<T, PK extends Serializable> implements ICrudGenerico<T
 		this.entityManager.flush();
 		this.entityManager.getTransaction().commit();
 		return true;
-	}
-
-	@Override
-	public T get(PK primaryKey) {
-		return null;
 	}
 
 }

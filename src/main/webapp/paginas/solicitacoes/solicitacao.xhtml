@@ -10,29 +10,37 @@
 	<ui:composition template="../../template.xhtml">
 		<ui:define name="conteudo">
 			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Solicitação de Documentos</p>
-			<h:form style="font-size: 11px;">
+			<h:form style="font-size: 11px;" prependId="false" id="formSolicitacao">
+				<h:messages />
 				<p:fieldset legend="Informações Solicitante">
 					<h:panelGrid cellpadding="5" columns="2">
-						<h:panelGroup>
-							<h:outputLabel for="MatriculaSolicitante" value="Matricula Solicitante:" />
-							<br />
-							<h:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" maxlength="100" size="10" style="width:100px;" value="001" />
-						</h:panelGroup>
-						<h:panelGroup>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
+							<h:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
+								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true">
+
+							</h:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
 							<h:outputLabel for="solicitante" value="Solicitante:" />
-							<br />
-							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:600px;" value="ALUNO OU FUNCIONARIO" />
-							<p:commandButton image="ui-icon ui-icon-search" />
-						</h:panelGroup>
+							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:500px;"
+								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
+							<p:commandButton image="ui-icon ui-icon-search" onclick="modalFuncionario.show()" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+						<h:outputLabel for="listaObjetivos" value="Objetivos:" />
+						<h:selectOneListbox id="listaObjetivos" style="width: 300px;" value="#{controladorSolicitacao.tipoSolicitacaoSelecionada}">
+							<f:selectItems value="#{controladorSolicitacao.tiposSolicitacao}" var="o" itemLabel="#{o.nome}" itemValue="#{o.id}" />
+						</h:selectOneListbox>
+						<p:commandButton value="Incluir" actionListener="#{controladorSolicitacao.adiionarObjetivo}"  ajax="false" />
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5">
-
-						<p:dataTable var="tipoSolicitacao" value="#{controladorSolicitacao.tiposSolicitacao}" selection="#{controladorSolicitacao.tipoSolicitacaoSelecionada}"
+						<p:dataTable var="tipoSolicitacao" value="#{controladorSolicitacao.solicitacao.tiposSolicitacao}" selection="#{controladorSolicitacao.tipoSolicitacaoSelecionada}"
 							style="max-width:800px;min-width:650px;">
-
 							<f:facet name="header"> 
-			            Tipos de Solicitação  
-			        </f:facet>
+			            		Tipos de Solicitação  
+			        		</f:facet>
 							<p:column style="width:20%">
 								<f:facet name="header">
 									<h:outputText value="Código" />
@@ -46,12 +54,9 @@
 								<h:outputText value="#{tipoSolicitacao.nome}" />
 							</p:column>
 							<f:facet name="footer">
-								<p:commandButton value="Adicionar" update="form:display" />
-								<p:commandButton value="Remover" update="form:display" />
+								<p:commandButton value="Remover" actionListener="#{controladorSolicitacao.removerObjetivo}" ajax="false" />
 							</f:facet>
-
 						</p:dataTable>
-
 					</h:panelGrid>
 				</p:fieldset>
 
@@ -81,11 +86,40 @@
 						<h:panelGroup>
 							<h:outputLabel for="Justificativa" value="Justificativa:" />
 							<br />
-							<p:inputTextarea value="" cols="85" rows="3"></p:inputTextarea>
+							<p:inputTextarea value="controladorSolicitacao.solicitacao.justificativa" cols="85" rows="3"></p:inputTextarea>
 						</h:panelGroup>
 					</h:panelGrid>
 
 				</p:fieldset>
+
+				<!-- Modal Pesquisar Funcionario -->
+				<p:dialog header="Pesquisar Funcionário" widgetVar="modalFuncionario" modal="true" width="600" height="400">
+					<p:dataTable var="pessoa" value="#{controladorSolicitacao.pessoas}" selection="#{controladorSolicitacao.solicitacao.solicitante}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Matricula" />
+							</f:facet>
+							<h:outputText value="#{pessoa.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+							<h:outputText value="#{pessoa.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="cpf" />
+							</f:facet>
+							<h:outputText value="#{pessoa.cpf}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalFuncionario.hide()" />
+						</f:facet>
+
+					</p:dataTable>
+
+				</p:dialog>
 				<br />
 				<br />
 				<h:panelGroup>
