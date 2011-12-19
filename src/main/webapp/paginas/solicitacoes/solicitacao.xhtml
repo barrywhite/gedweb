@@ -12,20 +12,17 @@
 			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Solicitação de Documentos</p>
 			<h:form style="font-size: 11px;" prependId="false" id="formSolicitacao">
 				<h:messages />
-				<p:fieldset legend="Informações Solicitante">
-					<h:panelGrid cellpadding="5" columns="2">
-						<h:panelGrid columns="2">
-							<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
-							<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
-								value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true" />
-						</h:panelGrid>
-						<h:panelGrid columns="4">
-							<h:outputLabel for="solicitante" value="Solicitante:" />
-							<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:400px;"
-								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
-							<p:commandButton image="ui-icon ui-icon-search" onclick="modalSolicitante.show()" />
-							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
-						</h:panelGrid>
+				<p:fieldset legend="Informações Solicitante" style="max-width:800px;font-size:11px">
+					<h:panelGrid cellpadding="5" columns="6">
+						<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
+						<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
+							value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true" />
+
+						<h:outputLabel for="solicitante" value="Solicitante:" />
+						<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:300px;"
+							value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
+						<p:commandButton image="ui-icon ui-icon-search" onclick="modalSolicitante.show()" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
 					</h:panelGrid>
 
 					<h:panelGrid cellpadding="5">
@@ -54,11 +51,11 @@
 					</h:panelGrid>
 				</p:fieldset>
 
-				<p:fieldset legend="Informações Atendimento">
+				<p:fieldset legend="Informações Atendimento" style="max-width:800px;font-size:11px">
 					<h:panelGrid cellpadding="5">
 						<h:panelGrid columns="4">
 							<h:outputLabel for="departamento" value="Destino (Departamento):" />
-							<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:400px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true" />
+							<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:300px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true" />
 							<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
 							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerDepartamento}" update="formSolicitacao" />
 						</h:panelGrid>
@@ -71,7 +68,7 @@
 						</h:panelGrid>
 						<h:panelGrid columns="4">
 							<h:outputLabel for="atendente" value="Atendente:" />
-							<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:400px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}"
+							<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:300px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}"
 								readonly="true" />
 							<p:commandButton image="ui-icon ui-icon-search" onclick="modalAtendente.show()" />
 							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerAtendente}" update="formSolicitacao" />
@@ -80,15 +77,14 @@
 					<h:panelGrid cellpadding="5">
 						<h:panelGrid columns="2">
 							<h:outputLabel for="Justificativa" value="Justificativa:" />
-							<p:inputText id="justificativa" required="true" label="Justificativa" maxlength="100" size="20" style="width:400px;"
-								value="#{controladorSolicitacao.solicitacao.justificativa}" />
+							<p:inputText id="justificativa" label="Justificativa" maxlength="100" size="20" style="width:600px;" value="#{controladorSolicitacao.solicitacao.justificativa}" />
 						</h:panelGrid>
 					</h:panelGrid>
 
 				</p:fieldset>
 
 				<!-- Modal Pesquisar Funcionario -->
-				<p:dialog header="Pesquisar Funcionário" widgetVar="modalSolicitante" modal="true" width="600" height="400">
+				<p:dialog header="Selecionar Solicitante" widgetVar="modalSolicitante" modal="true" width="600" height="400">
 					<p:dataTable var="pessoa" value="#{controladorSolicitacao.pessoas}" selection="#{controladorSolicitacao.solicitacao.solicitante}" selectionMode="single">
 						<p:column>
 							<f:facet name="header">
@@ -114,8 +110,8 @@
 					</p:dataTable>
 				</p:dialog>
 
-				<!-- Modal Pesquisar Funcionario -->
-				<p:dialog header="Pesquisar Funcionário" widgetVar="modalAtendente" modal="true" width="600" height="400">
+				<!-- Modal Pesquisar Atendente -->
+				<p:dialog header="Selecionar Funcionário" widgetVar="modalAtendente" modal="true" width="600" height="400">
 					<p:dataTable var="pessoa" value="#{controladorSolicitacao.pessoas}" selection="#{controladorSolicitacao.solicitacao.atendente}" selectionMode="single">
 						<p:column>
 							<f:facet name="header">
@@ -166,7 +162,7 @@
 							<h:outputText value="#{objetivo.nome}" />
 						</p:column>
 						<f:facet name="footer">
-							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" actionListener="#{controladorSolicitacao.adicionarObjetivo}" update="tipoSolicitacao"
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" actionListener="#{controladorSolicitacao.adicionarObjetivo}" update="tipoSolicitacao" ajax="false"
 								oncomplete="modalObjetivo.hide()" />
 						</f:facet>
 					</p:dataTable>
@@ -176,7 +172,7 @@
 				<br />
 				<h:panelGroup>
 					<h:panelGrid columns="3">
-						<p:commandButton value="Salvar" />
+						<p:commandButton value="Salvar" action="#{controladorSolicitacao.adicionarSolicitacao}" ajax="false" />
 						<p:commandButton value="Alterar" />
 						<p:commandButton value="Voltar" />
 					</h:panelGrid>

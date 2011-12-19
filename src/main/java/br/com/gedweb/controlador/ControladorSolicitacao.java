@@ -5,16 +5,17 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.ActionListener;
 
 import br.com.gedweb.dao.DepartamentoDao;
 import br.com.gedweb.dao.PessoaDao;
 import br.com.gedweb.dao.SolicitacaoDao;
 import br.com.gedweb.dao.TipoSolicitacaoDao;
+import br.com.gedweb.dao.TramiteDao;
 import br.com.gedweb.modelo.Departamento;
 import br.com.gedweb.modelo.Pessoa;
 import br.com.gedweb.modelo.Solicitacao;
 import br.com.gedweb.modelo.TipoSolicitacao;
+import br.com.gedweb.modelo.Tramite;
 
 @ManagedBean(name = "controladorSolicitacao")
 @SessionScoped
@@ -27,6 +28,7 @@ public class ControladorSolicitacao {
 	private SolicitacaoDao solicitacaoDao;
 	private PessoaDao pessoaDao;
 	private DepartamentoDao departamentoDao;
+	private TramiteDao tramiteDao;
 
 	public ControladorSolicitacao() {
 		tipoSolicitacaoDao = new TipoSolicitacaoDao();
@@ -35,6 +37,7 @@ public class ControladorSolicitacao {
 		pessoaDao = new PessoaDao();
 		solicitacao = new Solicitacao();
 		departamentoDao = new DepartamentoDao();
+		tramiteDao = new TramiteDao();
 	}
 
 	public List<TipoSolicitacao> getTiposSolicitacao() {
@@ -97,8 +100,18 @@ public class ControladorSolicitacao {
 		return departamentoDao.buscarTodos();
 	}
 
-	public void removerAtendente(ActionListener e) {
+	public void removerAtendente(ActionEvent e) {
 		this.solicitacao.setAtendente(new Pessoa());
+	}
+	
+	public String adicionarSolicitacao(){
+		Tramite tramite = new Tramite();
+		tramite.setDepartamento(departamento);
+		solicitacao.getTramites().add(tramite);
+		solicitacaoDao.adicionar(solicitacao);
+		tramite.setSolicitacao(solicitacao);
+		tramiteDao.adicionar(tramite);
+		return "solicitacao-list";
 	}
 
 }

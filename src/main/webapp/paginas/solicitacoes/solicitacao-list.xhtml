@@ -1,94 +1,99 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.prime.com.tr/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Sistema GEDWEB</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema GEDWEB</title>
 </h:head>
 <h:body>
-<h:form id="form">
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="conteudo">
+			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Solicitações</p>
+			<h:form style="font-size: 11px;">
+				<p:fieldset legend="Filtro de Busca" style="max-width:800px;font-size:11px">
+					<h:panelGrid columns="6" cellpadding="5">
+						<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
+						<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
+							value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true" />
+						<h:outputLabel for="solicitante" value="Solicitante:" />
+						<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:300px;"
+							value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
+						<p:commandButton image="ui-icon ui-icon-search" onclick="modalSolicitante.show()" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="6">
+						<h:outputLabel for="matriculaAtendente" value="Matricula Atendente:" />
+						<p:inputText id="matriculaAtendene" required="true" label="Matricula Atendente" size="10" style="width:100px;" value="#{controladorSolicitacao.solicitacao.atendente.id}"
+							readonly="true" />
+						<h:outputLabel for="atendente" value="Atendente:" />
+						<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:300px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}"
+							readonly="true" />
+						<p:commandButton image="ui-icon ui-icon-search" onclick="modalAtendente.show()" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerAtendente}" update="formSolicitacao" />
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="4">
+						<h:outputLabel for="departamento" value="Destino (Departamento):" />
+						<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:300px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true" />
+						<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerDepartamento}" update="formSolicitacao" />
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="2">
+						<p:commandButton value="Pesquisar" image="ui-icon ui-icon-search" style="font-size:12px" />
+					</h:panelGrid>
+				</p:fieldset>
+				<br />
 
-    <p:growl id="msgs" showDetail="true" />
+				<p:fieldset legend="Detalhes Solicitação" style="max-width:800px;font-size:11px">
+					<h:panelGrid cellpadding="5" style="font-size:12px">
+						<p:dataTable var="solicitacao" value="#{controladorSolicitacao.solicitacoes}" selection="#{controladorSolicitacao.solicitacao}" style="max-width:800px;min-width:750px;">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Ações" style="width:5%" />
+								</f:facet>
+								<p:commandButton value="" image="ui-icon ui-icon-arrowrefresh-1-w" update="form:display" title="Editar" />
+								<p:commandButton value="" image="ui-icon ui-icon-close" update="form:display" title="Excluir" />
+							</p:column>
 
-    <p:dataTable id="solicitacoes" var="solicitacao" value="#{controladorSolicitacao.solicitacoes}">
+							<p:column style="width:10%">
+								<f:facet name="header">
+									<h:outputText value="Código" />
+								</f:facet>
+								<h:outputText value="#{solicitacao.id}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Solicitante" />
+								</f:facet>
+								<h:outputText value="#{solicitacao.solicitante.nome}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Atendente" />
+								</f:facet>
+								<h:outputText value="#{solicitacao.atendente.nome}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Objetivo" />
+								</f:facet>
+								<h:outputText value="#{solicitacao.tiposSolicitacao[0].nome}" />
+							</p:column>
+						</p:dataTable>
 
-        <p:column headerText="Código">
-            <h:outputText value="#{solicitacao.id}" />
-        </p:column>
+					</h:panelGrid>
 
-        <p:column headerText="Solicitante">
-            <h:outputText value="#{solicitacao.solicitante}" />
-        </p:column>
+				</p:fieldset>
 
-        <p:column headerText="Atendente">
-            <h:outputText value="#{solicitacao.atendente}" />
-        </p:column>
-
-        <p:column headerText="Tipo">
-            <h:outputText value="#{solicitacao.tipo}" />
-        </p:column>
-
-        <p:column style="width:100px">
-             <h:panelGrid columns="3" styleClass="actions" cellpadding="2">
-                 <p:commandButton update=":form:display" oncomplete="solicitacaoDialog.show()" image="ui-icon ui-icon-search" title="View">
-                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.solicitacaoSelecionada}" />
-                     <f:setPropertyActionListener value="#{false}" target="#{controladorSolicitacao.editar}" />
-                 </p:commandButton>
-                 <p:commandButton update=":form:display" oncomplete="carDialog.show()" image="ui-icon ui-icon-pencil" title="Edit">
-                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.SolicitacaoSelecionada}" />
-                     <f:setPropertyActionListener value="#{true}" target="#{controladorSolicitacao.editar}" />
-                 </p:commandButton>
-                 <p:commandButton update=":form:display" oncomplete="confirmation.show()" image="ui-icon ui-icon-close" title="Delete">
-                     <f:setPropertyActionListener value="#{solicitacao}" target="#{controladorSolicitacao.solicitacaoSelecionada}" />
-                 </p:commandButton>
-             </h:panelGrid>
-        </p:column>
-
-    </p:dataTable>
-
-    <p:dialog header="Solicitação" widgetVar="solicitacaoDialog" resizable="false" id="solicitacaoDlg"
-                showEffect="fade" hideEffect="explode" modal="true">
-
-        <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
-        
-            <h:outputText value="Solicitante:" />
-            <h:panelGroup>
-                <h:outputText value="#{controladorSolicitacao.solicitacaoSelecionada.solicitante.nome}" style="font-weight:bold" rendered="#{!controladorSolicitacao.editar}"/>
-                <p:inputText value="#{controladorSolicitacao.solicitacaoSelecionada.solicitante.nome}" rendered="#{controladroSolicitacao.editar}" required="true" label="Solicitante"/>
-            </h:panelGroup>
-
-            <h:outputText value="Atendente:" />
-            <h:panelGroup>
-                <h:outputText value="#{controladorSolicitacao.solicitacaoSelecionada.atendente.nome}" style="font-weight:bold" rendered="#{!controladorSolicitacao.editar}"/>
-                <p:inputText value="#{controladorSolicitacao.solicitacaoSelecionada.atendente.nome}" rendered="#{controladorSolicitacao.editar}" required="true" label="Year"/>
-            </h:panelGroup>
-
-            <f:facet name="footer">
-                <p:outputPanel rendered="#{controladorSolicitacao.editar}" layout="block" style="text-align:right">
-                    <p:commandButton value="Save" update="solicitacoes msgs" actionListener="#{controladorSolicitacao.salvar}" 
-                                    oncomplete="onEditComplete(xhr,status,args)" image="ui-icon ui-icon-check"/>
-                    <p:commandButton value="Cancel" onclick="carDialog.hide()" type="button" image="ui-icon ui-icon-close"/>
-
-                </p:outputPanel>
-            </f:facet>
-        </h:panelGrid>
-
-    </p:dialog>
-
-    <p:confirmDialog message="Deseja excluir o registro?" width="200"
-                    showEffect="explode" hideEffect="explode"
-                    header="Confirm" severity="alert" widgetVar="confirmation">
-
-        <p:commandButton value="Sim" update="solicitacoes" actionListener="#{controladorSolicitacao.remover}" oncomplete="confirmation.hide()"/>
-        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />
-
-    </p:confirmDialog>
-
-    </h:form>	
+				<h:panelGroup style="font-size:12px">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Novo" image="ui-icon ui-icon-document" />
+						<p:commandButton value="Limpar" />
+					</h:panelGrid>
+					<br />
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

@@ -35,17 +35,17 @@ public class Tramite {
 
 	@Column
 	private String observacao;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_departamento")
 	private Departamento departamento;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_solicitacao")
-	private Solicitacao solicitacao;	
+	private Solicitacao solicitacao;
 
 	public Tramite() {
-
+		this.dataEntrada = new Date();
 	}
 
 	public Integer getId() {
@@ -127,9 +127,7 @@ public class Tramite {
 
 	@Override
 	public String toString() {
-		return "Tramite [id=" + id + ", status=" + status + ", dataEntrada="
-				+ dataEntrada + ", dataSaida=" + dataSaida + ", observacao="
-				+ observacao + "]";
+		return "Tramite [id=" + id + ", status=" + status + ", dataEntrada=" + dataEntrada + ", dataSaida=" + dataSaida + ", observacao=" + observacao + "]";
 	}
 
 }
