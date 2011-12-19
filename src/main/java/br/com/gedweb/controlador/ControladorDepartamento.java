@@ -64,11 +64,7 @@ public class ControladorDepartamento {
 		return "departamento";
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void buscarPorFiltro(ActionEvent ae) {
-//		CrudGenerico crud = new CrudGenerico(Departamento.class, this.em);
-//		crud.buscarPorFiltro(this.departamento);
-
 		this.departamento = new Departamento();
 	}
 

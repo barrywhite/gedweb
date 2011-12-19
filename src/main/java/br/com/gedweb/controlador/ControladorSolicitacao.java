@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ActionListener;
 
 import br.com.gedweb.dao.DepartamentoDao;
 import br.com.gedweb.dao.PessoaDao;
@@ -94,6 +95,10 @@ public class ControladorSolicitacao {
 
 	public List<Departamento> getDepartamentos() {
 		return departamentoDao.buscarTodos();
+	}
+
+	public void removerAtendente(ActionListener e) {
+		this.solicitacao.setAtendente(new Pessoa());
 	}
 
 }

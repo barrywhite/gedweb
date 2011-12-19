@@ -16,15 +16,14 @@
 					<h:panelGrid cellpadding="5" columns="2">
 						<h:panelGrid columns="2">
 							<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
-							<h:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
-								value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true">
-							</h:inputText>
+							<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;"
+								value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true" />
 						</h:panelGrid>
 						<h:panelGrid columns="4">
 							<h:outputLabel for="solicitante" value="Solicitante:" />
-							<h:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:400px;"
+							<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:400px;"
 								value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
-							<p:commandButton image="ui-icon ui-icon-search" onclick="modalFuncionario.show()" />
+							<p:commandButton image="ui-icon ui-icon-search" onclick="modalSolicitante.show()" />
 							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
 						</h:panelGrid>
 					</h:panelGrid>
@@ -59,36 +58,37 @@
 					<h:panelGrid cellpadding="5">
 						<h:panelGrid columns="4">
 							<h:outputLabel for="departamento" value="Destino (Departamento):" />
-							<h:inputText id="departamento" required="true" maxlength="100" size="10" style="width:400px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true"/>
+							<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:400px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true" />
 							<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
 							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerDepartamento}" update="formSolicitacao" />
 						</h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5" columns="2">
-						<h:panelGroup>
-							<h:outputLabel for="MatriculaAtendente" value="Matricula Atendente:" />
-							<br />
-							<h:inputText id="matriculaAtendente" required="true" maxlength="100" size="10" style="width:120px;" value="010" />
-						</h:panelGroup>
-						<h:panelGroup>
-							<h:outputLabel for="Atendente" value="Atendente:" />
-							<br />
-							<h:inputText id="atendente" required="true" maxlength="100" size="20" style="width:600px;" value="FUNCIONARIO" />
-							<p:commandButton image="ui-icon ui-icon-search" />
-						</h:panelGroup>
+						<h:panelGrid columns="2">
+							<h:outputLabel for="matriculaAtendente" value="Matricula Atendente:" />
+							<p:inputText id="matriculaAtendene" required="true" label="Matricula Atendente" size="10" style="width:100px;" value="#{controladorSolicitacao.solicitacao.atendente.id}"
+								readonly="true" />
+						</h:panelGrid>
+						<h:panelGrid columns="4">
+							<h:outputLabel for="atendente" value="Atendente:" />
+							<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:400px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}"
+								readonly="true" />
+							<p:commandButton image="ui-icon ui-icon-search" onclick="modalAtendente.show()" />
+							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerAtendente}" update="formSolicitacao" />
+						</h:panelGrid>
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5">
-						<h:panelGroup>
+						<h:panelGrid columns="2">
 							<h:outputLabel for="Justificativa" value="Justificativa:" />
-							<br />
-							<p:inputTextarea value="controladorSolicitacao.solicitacao.justificativa" cols="85" rows="3"></p:inputTextarea>
-						</h:panelGroup>
+							<p:inputText id="justificativa" required="true" label="Justificativa" maxlength="100" size="20" style="width:400px;"
+								value="#{controladorSolicitacao.solicitacao.justificativa}" />
+						</h:panelGrid>
 					</h:panelGrid>
 
 				</p:fieldset>
 
 				<!-- Modal Pesquisar Funcionario -->
-				<p:dialog header="Pesquisar Funcionário" widgetVar="modalFuncionario" modal="true" width="600" height="400">
+				<p:dialog header="Pesquisar Funcionário" widgetVar="modalSolicitante" modal="true" width="600" height="400">
 					<p:dataTable var="pessoa" value="#{controladorSolicitacao.pessoas}" selection="#{controladorSolicitacao.solicitacao.solicitante}" selectionMode="single">
 						<p:column>
 							<f:facet name="header">
@@ -109,7 +109,34 @@
 							<h:outputText value="#{pessoa.cpf}" />
 						</p:column>
 						<f:facet name="footer">
-							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalFuncionario.hide()" />
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalSolicitante.hide()" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<!-- Modal Pesquisar Funcionario -->
+				<p:dialog header="Pesquisar Funcionário" widgetVar="modalAtendente" modal="true" width="600" height="400">
+					<p:dataTable var="pessoa" value="#{controladorSolicitacao.pessoas}" selection="#{controladorSolicitacao.solicitacao.atendente}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Matricula" />
+							</f:facet>
+							<h:outputText value="#{pessoa.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+							<h:outputText value="#{pessoa.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="cpf" />
+							</f:facet>
+							<h:outputText value="#{pessoa.cpf}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formSolicitacao" oncomplete="modalAtendente.hide()" />
 						</f:facet>
 					</p:dataTable>
 				</p:dialog>
