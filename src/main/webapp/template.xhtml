@@ -15,7 +15,7 @@
 		<p:graphicImage url="/imagens/img_topo_faepa.png" style="float:right" />
 		<p:menubar autoSubmenuDisplay="true" style="min-width:100%;">
 
-			<p:menuitem value="Inicio" url="index.jsf" icon="ui-icon ui-icon-home" />
+			<p:menuitem value="Inicio" url="/paginas/index.jsf" icon="ui-icon ui-icon-home" />
 
 			<p:submenu label="Cadastro" icon="ui-icon ui-icon-document">
 
@@ -30,13 +30,12 @@
 					<p:menuitem value="Pasta Aluno" url="#" />
 				</p:submenu>
 
-				<p:menuitem value="Solicitações" url="#" />
-
-				<p:menuitem value="Trâmite" url="#" />
-
 			</p:submenu>
 
-
+			<p:submenu label="Gerenciamento" icon="ui-icon ui-icon-document">
+				<p:menuitem value="Solicitação" url="/paginas/solicitacoes/solicitacao-list.jsf" />
+				<p:menuitem value="Tramite" url="/paginas/tramitacoes/tramitacao-list.jsf" />
+			</p:submenu>
 
 			<p:submenu label="Sobre" icon="ui-icon ui-icon-help">
 				<p:menuitem value="GEDWEB" url="#" />
@@ -45,7 +44,7 @@
 			<p:menuitem value="Sair" url="#" icon="ui-icon ui-icon-close" />
 
 		</p:menubar>
-		<h:panelGroup >
+		<h:panelGroup>
 			<h:outputText value="seja bem vindo: Barry White" />
 		</h:panelGroup>
 

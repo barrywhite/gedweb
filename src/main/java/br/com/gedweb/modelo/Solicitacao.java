@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.gedweb.enuns.SituacaoSolicitacao;
 
 @Entity
 @Table(name = "SOLICITACAO")
@@ -35,13 +40,17 @@ public class Solicitacao {
 	@Column(name = "DATA_CONCLUSAO")
 	private Date dataConclusao;
 
+	@Column
+	@Enumerated(EnumType.STRING)
+	private SituacaoSolicitacao situacao; 
+	
 	@ManyToOne
 	private Pessoa solicitante;
 
-	@ManyToOne(optional=true)
+	@ManyToOne(optional = true)
 	private Pessoa atendente;
-	
-	@OneToMany(mappedBy = "solicitacoes")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitacoes")
 	private List<TipoSolicitacao> tiposSolicitacao = new ArrayList<TipoSolicitacao>();
 
 	@OneToMany(mappedBy = "solicitacao")
@@ -112,6 +121,14 @@ public class Solicitacao {
 
 	public void setTramites(List<Tramite> tramites) {
 		this.tramites = tramites;
+	}
+
+	public void setSituacao(SituacaoSolicitacao situacao) {
+		this.situacao = situacao;
+	}
+
+	public SituacaoSolicitacao getSituacao() {
+		return situacao;
 	}
 
 	@Override

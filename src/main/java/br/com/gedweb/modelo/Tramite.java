@@ -44,6 +44,9 @@ public class Tramite {
 	@JoinColumn(name = "id_solicitacao")
 	private Solicitacao solicitacao;
 
+	@ManyToOne(optional = true)
+	private Pessoa atendente;
+	
 	public Tramite() {
 		this.dataEntrada = new Date();
 	}
@@ -98,6 +101,14 @@ public class Tramite {
 
 	public Departamento getDepartamento() {
 		return departamento;
+	}
+
+	public void setAtendente(Pessoa atendente) {
+		this.atendente = atendente;
+	}
+
+	public Pessoa getAtendente() {
+		return atendente;
 	}
 
 	@Override

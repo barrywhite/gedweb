@@ -30,7 +30,7 @@ public class ControladorLogin {
 		paramName.add("senha");
 		param.add(pessoa.getSenha().toUpperCase());
 		if (pessoaDao.buscarLogin(paramName, param) != null) {
-			return "cadastros/aluno-list";
+			return "index";
 		}
 		return "";
 	}

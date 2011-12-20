@@ -9,34 +9,34 @@
 <h:body>
 	<ui:composition template="../../template.xhtml">
 		<ui:define name="conteudo">
-			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Solicitações</p>
+			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Tramitações</p>
 			<h:form style="font-size: 11px;">
 				<p:fieldset legend="Filtro de Busca" style="max-width:800px;font-size:11px">
 					<h:panelGrid columns="6" cellpadding="5">
 						<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
-						<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:50px;"
-							value="#{controladorSolicitacao.solicitacao.solicitante.id}" readonly="true" />
+						<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:50px;" value="#{controladorTramitacao.solicitacao.solicitante.id}"
+							readonly="true" />
 						<h:outputLabel for="solicitante" value="Solicitante:" />
-						<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:300px;"
-							value="#{controladorSolicitacao.solicitacao.solicitante.nome}" readonly="true" />
+						<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:300px;" value="#{controladorTramitacao.solicitacao.solicitante.nome}"
+							readonly="true" />
 						<p:commandButton image="ui-icon ui-icon-search" onclick="modalSolicitante.show()" />
-						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerSolicitante}" update="formSolicitacao" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorTramitacao.removerSolicitante}" update="formSolicitacao" />
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5" columns="6">
 						<h:outputLabel for="matriculaAtendente" value="Matricula Atendente:" />
-						<p:inputText id="matriculaAtendene" required="true" label="Matricula Atendente" size="10" style="width:50px;" value="#{controladorSolicitacao.solicitacao.atendente.id}"
+						<p:inputText id="matriculaAtendene" required="true" label="Matricula Atendente" size="10" style="width:50px;" value="#{controladorTramitacao.solicitacao.atendente.id}"
 							readonly="true" />
 						<h:outputLabel for="atendente" value="Atendente:" />
-						<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:300px;" value="#{controladorSolicitacao.solicitacao.atendente.nome}"
+						<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:300px;" value="#{controladorTramitacao.solicitacao.atendente.nome}"
 							readonly="true" />
 						<p:commandButton image="ui-icon ui-icon-search" onclick="modalAtendente.show()" />
-						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerAtendente}" update="formSolicitacao" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorTramitacao.removerAtendente}" update="formSolicitacao" />
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5" columns="4">
 						<h:outputLabel for="departamento" value="Destino (Departamento):" />
-						<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:300px;" value="#{controladorSolicitacao.departamento.nome}" readonly="true" />
+						<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:300px;" value="#{controladorTramitacao.departamento.nome}" readonly="true" />
 						<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
-						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorSolicitacao.removerDepartamento}" update="formSolicitacao" />
+						<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorTramitacao.removerDepartamento}" update="formSolicitacao" />
 					</h:panelGrid>
 					<h:panelGrid cellpadding="5" columns="2">
 						<p:commandButton value="Pesquisar" image="ui-icon ui-icon-search" style="font-size:12px" />
@@ -46,13 +46,14 @@
 
 				<p:fieldset legend="Detalhes Solicitação" style="max-width:800px;font-size:11px">
 					<h:panelGrid cellpadding="5" style="font-size:12px">
-						<p:dataTable var="solicitacao" value="#{controladorSolicitacao.solicitacoes}" selection="#{controladorSolicitacao.solicitacao}" style="max-width:800px;min-width:750px;">
+						<p:dataTable var="solicitacao" value="#{controladorTramitacao.solicitacoes}" selection="#{controladorTramitacao.solicitacao}" style="max-width:800px;min-width:750px;"
+							selectionMode="single">
 							<p:column>
 								<f:facet name="header">
 									<h:outputText value="Ações" style="width:5%" />
 								</f:facet>
-								<p:commandButton value="" image="ui-icon ui-icon-arrowrefresh-1-w" update="form:display" title="Editar" />
-								<p:commandButton value="" image="ui-icon ui-icon-close" update="form:display" title="Excluir" />
+								<p:commandButton value="" action="#{controladorTramitacao.visualizar}" image="ui-icon ui-icon-arrowrefresh-1-w" title="Visualizar" ajax="false" />
+
 							</p:column>
 
 							<p:column style="width:5%">
@@ -86,9 +87,7 @@
 								<h:outputText value="#{solicitacao.situacao.nome}" />
 							</p:column>
 						</p:dataTable>
-
 					</h:panelGrid>
-
 				</p:fieldset>
 
 				<h:panelGroup style="font-size:12px">

@@ -12,27 +12,26 @@ import br.com.gedweb.dao.PessoaDao;
 import br.com.gedweb.dao.SolicitacaoDao;
 import br.com.gedweb.dao.TipoSolicitacaoDao;
 import br.com.gedweb.dao.TramiteDao;
-import br.com.gedweb.enuns.SituacaoSolicitacao;
 import br.com.gedweb.modelo.Departamento;
 import br.com.gedweb.modelo.Pessoa;
 import br.com.gedweb.modelo.Solicitacao;
 import br.com.gedweb.modelo.TipoSolicitacao;
 import br.com.gedweb.modelo.Tramite;
 
-@ManagedBean(name = "controladorSolicitacao")
+@ManagedBean(name = "controladorTramitacao")
 @SessionScoped
-public class ControladorSolicitacao {
+public class ControladorTramitacao {
 
 	private Solicitacao solicitacao;
-	private TipoSolicitacao tipoSolicitacaoSelecionada;
 	private Departamento departamento;
 	private TipoSolicitacaoDao tipoSolicitacaoDao;
 	private SolicitacaoDao solicitacaoDao;
 	private PessoaDao pessoaDao;
 	private DepartamentoDao departamentoDao;
 	private TramiteDao tramiteDao;
+	private Tramite tramiteSelecionado;
 
-	public ControladorSolicitacao() {
+	public ControladorTramitacao() {
 		tipoSolicitacaoDao = new TipoSolicitacaoDao();
 		departamento = new Departamento();
 		solicitacaoDao = new SolicitacaoDao();
@@ -44,14 +43,6 @@ public class ControladorSolicitacao {
 
 	public List<TipoSolicitacao> getTiposSolicitacao() {
 		return tipoSolicitacaoDao.buscarTodos();
-	}
-
-	public void setTipoSolicitacaoSelecionada(TipoSolicitacao tipoSolicitacaoSelecionada) {
-		this.tipoSolicitacaoSelecionada = tipoSolicitacaoSelecionada;
-	}
-
-	public TipoSolicitacao getTipoSolicitacaoSelecionada() {
-		return tipoSolicitacaoSelecionada;
 	}
 
 	public List<Solicitacao> getSolicitacoes() {
@@ -68,18 +59,6 @@ public class ControladorSolicitacao {
 
 	public Solicitacao getSolicitacao() {
 		return solicitacao;
-	}
-
-	public void adicionarObjetivo(ActionEvent e) {
-		if (!solicitacao.getTiposSolicitacao().contains(tipoSolicitacaoSelecionada)) {
-			solicitacao.getTiposSolicitacao().add(tipoSolicitacaoSelecionada);
-		}
-	}
-
-	public void removerObjetivo(ActionEvent e) {
-		if (solicitacao.getTiposSolicitacao().contains(tipoSolicitacaoSelecionada)) {
-			solicitacao.getTiposSolicitacao().remove(tipoSolicitacaoSelecionada);
-		}
 	}
 
 	public void removerSolicitante(ActionEvent e) {
@@ -105,18 +84,54 @@ public class ControladorSolicitacao {
 	public void removerAtendente(ActionEvent e) {
 		this.solicitacao.setAtendente(new Pessoa());
 	}
-	
-	public String adicionarSolicitacao(){
+
+	public String adicionarSolicitacao() {
 		Tramite tramite = new Tramite();
-		tramite.setDepartamento(departamento);		
-		tramite.setDataEntrada(new Date());
-		tramite.setAtendente(solicitacao.getAtendente());
+		tramite.setDepartamento(departamento);
 		solicitacao.getTramites().add(tramite);
-		solicitacao.setSituacao(SituacaoSolicitacao.PENDENTE);
 		solicitacaoDao.adicionar(solicitacao);
 		tramite.setSolicitacao(solicitacao);
 		tramiteDao.adicionar(tramite);
 		return "solicitacao-list";
 	}
 
+	public String visualizar() {
+		return "tramitacao";
+	}
+
+	public String voltar() {
+		return "tramitacao-list";
+	}
+
+	public void setTramiteSelecionado(Tramite tramiteSelecionado) {
+		this.tramiteSelecionado = tramiteSelecionado;
+	}
+
+	public Tramite getTramiteSelecionado() {
+		return tramiteSelecionado;
+	}
+
+	public void removerTramitacao(ActionEvent e) {
+		if (!solicitacao.getTramites().contains(tramiteSelecionado)) {
+			solicitacao.getTramites().remove(tramiteSelecionado);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void adicionarTramitacao(ActionEvent e) {
+		Tramite tramite = new Tramite() ;
+		if (!solicitacao.getTramites().isEmpty()) {
+			tramite = solicitacao.getTramites().get(solicitacao.getTramites().size() - 1);
+			tramite.setDataSaida(new Date(2011,12,11));
+			tramiteDao.alterar(tramite);
+		}
+		tramite.setDataEntrada(new Date(2011,12,11));
+		tramite.setAtendente(solicitacao.getAtendente());
+		tramite.setDepartamento(departamento);
+
+		if (!solicitacao.getTramites().contains(tramite)) {
+			solicitacao.getTramites().add(tramite);
+		}
+		tramiteDao.adicionar(tramite);
+	}
 }

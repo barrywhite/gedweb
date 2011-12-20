@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema GEDWEB</title>
+</h:head>
+<h:body>
+	<ui:composition template="../../template.xhtml">
+		<ui:define name="conteudo">
+			<p class="titulo" style="font-size: 20px; color: #1E90FF;">Tramitação</p>
+			<h:form style="font-size: 11px;" prependId="false" id="formTramitacao">
+				<h:messages />
+				<p:fieldset legend="Informações Solicitante" style="max-width:800px;font-size:11px">
+					<h:panelGrid cellpadding="5" columns="4">
+						<h:outputLabel for="matriculaSolicitante" value="Matricula Solicitante:" />
+						<p:inputText id="matriculaSolcitante" required="true" label="Matricula Solicitante" size="10" style="width:100px;" value="#{controladorTramitacao.solicitacao.solicitante.id}"
+							readonly="true" />
+						<h:outputLabel for="solicitante" value="Solicitante:" />
+						<p:inputText id="solicitante" required="true" label="Solicitante" maxlength="100" size="20" style="width:300px;" value="#{controladorTramitacao.solicitacao.solicitante.nome}"
+							readonly="true" />
+					</h:panelGrid>
+
+					<h:panelGrid cellpadding="5">
+						<p:dataTable var="tipoSolicitacao" value="#{controladorTramitacao.solicitacao.tiposSolicitacao}" style="max-width:800px;min-width:650px;">
+							<f:facet name="header"> 
+			            		Tipos de Solicitação  
+			        		</f:facet>
+							<p:column style="width:20%">
+								<f:facet name="header">
+									<h:outputText value="Código" />
+								</f:facet>
+								<h:outputText value="#{tipoSolicitacao.id}" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{tipoSolicitacao.nome}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="2">
+						<h:outputLabel for="Justificativa" value="Justificativa:" />
+						<p:inputText id="justificativa" label="Justificativa" maxlength="100" size="20" style="width:600px;" value="#{controladorTramitacao.solicitacao.justificativa}" />
+					</h:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Tramitação" style="max-width:800px;font-size:11px">
+					<p:dataTable var="tramitacao" value="#{controladorTramitacao.solicitacao.tramites}" selection="#{controladorTramitacao.tramiteSelecionado}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Matricula Atendente / Nome" />
+							</f:facet>
+							<h:outputText value="#{tramitacao.atendente.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Departamento" />
+							</f:facet>
+							<h:outputText value="#{tramitacao.departamento.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Data Entrada" />
+							</f:facet>
+							<h:outputText value="#{tramitacao.dataEntrada}" pattern="dd/MM/yyyy" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Data Saída" />
+							</f:facet>
+							<h:outputText value="#{tramitacao.dataSaida}" pattern="dd/MM/yyyy"  />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Adicionar" onclick="modalTramitacao.show()" />
+							<p:commandButton value="Remover" actionListener="#{controladorTramitacao.removerTramitacao}" ajax="false" />
+						</f:facet>
+					</p:dataTable>
+				</p:fieldset>
+
+				<!-- Modal Pesquisar Atendente -->
+				<p:dialog header="Selecionar Funcionário" widgetVar="modalAtendente" modal="true" width="600" height="400">
+					<p:dataTable var="pessoa" value="#{controladorTramitacao.pessoas}" selection="#{controladorTramitacao.solicitacao.atendente}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Matricula" />
+							</f:facet>
+							<h:outputText value="#{pessoa.id}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+							<h:outputText value="#{pessoa.nome}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="cpf" />
+							</f:facet>
+							<h:outputText value="#{pessoa.cpf}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formTramitacao" oncomplete="modalAtendente.hide()" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<!-- Modal Pesquisar Departamento -->
+				<p:dialog header="Pesquisar Departamento" widgetVar="modalDepartamento" modal="true" width="600" height="400">
+					<p:dataTable var="departamento" value="#{controladorTramitacao.departamentos}" selection="#{controladorTramitacao.departamento}" selectionMode="single">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Departamento" />
+							</f:facet>
+							<h:outputText value="#{departamento.nome}" />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Selecionar" image="ui-icon ui-icon-search" update="formTramitacao" oncomplete="modalDepartamento.hide()" />
+						</f:facet>
+					</p:dataTable>
+				</p:dialog>
+
+				<!-- Motal Adicionar Tramitação -->
+				<p:dialog header="Adicionar Tramitação" widgetVar="modalTramitacao" modal="true" width="600" height="400">
+					<h:panelGrid cellpadding="5">
+						<h:panelGrid columns="4">
+							<h:outputLabel for="departamento" value="Destino (Departamento):" />
+							<p:inputText id="departamento" required="true" maxlength="100" size="10" style="width:300px;" value="#{controladorTramitacao.departamento.nome}" readonly="true" />
+							<p:commandButton image="ui-icon ui-icon-search" onclick="modalDepartamento.show()" />
+							<p:commandButton image="ui-icon ui-icon-close" actionListener="#{controladorTramitacao.removerDepartamento}" update="formTramitacao" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<h:panelGrid cellpadding="5" columns="5">
+						<h:outputLabel for="matriculaAtendente" value="Matricula Atendente:" />
+						<p:inputText id="matriculaAtendene" required="true" label="Matricula Atendente" size="10" style="width:100px;" value="#{controladorTramitacao.solicitacao.atendente.id}"
+							readonly="true" />
+						<h:outputLabel for="atendente" value="Atendente:" />
+						<p:inputText id="atendente" required="true" label="Atendente" maxlength="100" size="20" style="width:300px;" value="#{controladorTramitacao.solicitacao.atendente.nome}"
+							readonly="true" />
+					</h:panelGrid>
+					<h:panelGrid>
+						<p:commandButton image="ui-icon ui-icon-search" actionListener="#{controladorTramitacao.adicionarTramitacao}" oncomplete="modalTramitacao.hide()" value="Adicionar" ajax="false" />
+					</h:panelGrid>
+				</p:dialog>
+
+
+				<br />
+				<br />
+				<h:panelGroup>
+					<h:panelGrid columns="3">
+						<p:commandButton value="Autorizar" action="#{controladorTramitacao.autorizarSolicitacao}" ajax="false" />
+						<p:commandButton value="Negar" action="#{controladorTramitacao.NegarSolicitacao}" ajax="false" />
+						<p:commandButton value="Voltar" action="#{controladorTramitacao.voltar}" />
+					</h:panelGrid>
+				</h:panelGroup>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
